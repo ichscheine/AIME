@@ -24,7 +24,7 @@ app = Flask(__name__)
 CORS(app)  # Allows frontend access
 
 # Load scraped problems
-with open("../scraped_data/amc_10a_2024_problems.json", "r", encoding="utf-8") as f:
+with open("scraped_data/amc_10a_2024_problems.json", "r", encoding="utf-8") as f:
     problems = json.load(f)
 
 @app.route("/problems", methods=["GET"])
