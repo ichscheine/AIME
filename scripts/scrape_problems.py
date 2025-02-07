@@ -2,13 +2,12 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import random
-import re
 
 URL = "https://artofproblemsolving.com/wiki/index.php/2024_AMC_10A_Problems"
 LATEX_BASE_URL = "https:"  # AoPS LaTeX images use relative URLs
 
 def scrape_problems(url):
-    """Scrape problems using <h2> headers and corresponding <p> elements, replacing LaTeX with images."""
+    """Scrape problems and correctly insert placeholders for LaTeX images."""
     response = requests.get(url)
     if response.status_code != 200:
         print(f"Error: Failed to fetch {url}")
@@ -31,13 +30,20 @@ def scrape_problems(url):
             current_problem = {"title": problem_title, "problem_statement": "", "image_urls": []}
 
         elif elem.name == "p" and current_problem:
-            text = elem.get_text(strip=True)
-            current_problem["problem_statement"] += text + " "
+            text_parts = []
+            image_counter = 0
 
-            # Extract LaTeX images
-            for img in elem.find_all("img", {"class": "latex"}):
-                img_src = LATEX_BASE_URL + img["src"]
-                current_problem["image_urls"].append(img_src)
+            for part in elem.contents:
+                if isinstance(part, str):
+                    text_parts.append(part.strip())
+
+                elif part.name == "img" and "latex" in part.get("class", []):
+                    img_src = LATEX_BASE_URL + part["src"]
+                    current_problem["image_urls"].append(img_src)
+                    text_parts.append(f"{{math_{image_counter}}}")  # Unique placeholder
+                    image_counter += 1
+
+            current_problem["problem_statement"] += " ".join(text_parts)
 
     if current_problem:
         problems.append(current_problem)

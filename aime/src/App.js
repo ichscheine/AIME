@@ -27,6 +27,27 @@ const App = () => {
         fetchProblem();  // Fetch the first problem on page load
     }, []);
 
+    const renderProblemStatement = (statement, images) => {
+        const regex = /\{math_(\d+)\}/g;
+        const parts = statement.split(regex); // Split at placeholders
+
+        return parts.map((part, index) => {
+            const match = part.match(/^\d+$/); // Check if this is an image index
+            if (match) {
+                const imgIndex = parseInt(part, 10);
+                return images[imgIndex] ? (
+                    <img 
+                        key={index} 
+                        src={images[imgIndex]} 
+                        alt="Math expression" 
+                        style={{ verticalAlign: "middle", height: "18px", margin: "0 5px" }} 
+                    />
+                ) : null;
+            }
+            return <span key={index}>{part} </span>;
+        });
+    };
+
     return (
         <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
             <h1>2024 AMC 10A Problems</h1>
@@ -37,22 +58,9 @@ const App = () => {
             {problem && (
                 <div style={{ marginBottom: "20px", padding: "15px", border: "1px solid #ddd", borderRadius: "5px" }}>
                     <h3>{problem.title}</h3>
-                    <p>{problem.problem_statement}</p>
-                    
-                    {/* Display images instead of LaTeX text */}
-                    {problem.image_urls.length > 0 && (
-                        <div>
-                            <b>Math Image:</b>
-                            {problem.image_urls.map((src, index) => (
-                                <img 
-                                    key={index} 
-                                    src={src} 
-                                    alt="Math Problem" 
-                                    style={{ display: "block", marginTop: "10px", maxWidth: "100%" }} 
-                                />
-                            ))}
-                        </div>
-                    )}
+
+                    {/* Render problem statement with correctly placed images */}
+                    <p>{renderProblemStatement(problem.problem_statement, problem.image_urls)}</p>
 
                     <button onClick={fetchProblem} style={{ padding: "10px", marginTop: "10px", cursor: "pointer" }}>
                         Next Problem
