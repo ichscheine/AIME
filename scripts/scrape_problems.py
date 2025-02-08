@@ -32,7 +32,8 @@ def scrape_problems(url):
                 "title": problem_title,
                 "problem_statement": "",
                 "math_images": [],
-                "screenshot_images": []
+                "screenshot_images": [],
+                "answer_choices": "",
             }
 
         elif elem.name == "p" and current_problem:
@@ -48,9 +49,15 @@ def scrape_problems(url):
 
                     if "latex.artofproblemsolving.com" in img_src:  # Math image
                         full_img_src = LATEX_BASE_URL + img_src  # Ensure full URL
-                        current_problem["math_images"].append(full_img_src)
-                        text_parts.append(f"{{math_{image_counter}}}")
-                    
+
+                        # Check if the image alt contains any answer choices
+                        alt_text = part.get("alt", "")
+                        if "textbf{" in alt_text and "}" in alt_text:  # Answer choices have textbf{}
+                            current_problem["answer_choices"] = full_img_src  # Store answer choices separately
+                        else:
+                            current_problem["math_images"].append(full_img_src)
+                            text_parts.append(f"{{math_{image_counter}}}")
+                        
                     elif "wiki-images.artofproblemsolving.com" in img_src:  # Large Screenshot images
                         full_img_src = img_src  # Full URL already present
                         current_problem["screenshot_images"].append(full_img_src)
@@ -77,6 +84,7 @@ def scrape_problems(url):
         print(f"Statement: {problem['problem_statement']}")
         print(f"Math Images: {problem['math_images']}")
         print(f"Screenshot Images: {problem['screenshot_images']}")
+        print(f"Answer Choices: {problem['answer_choices']}")
         print("===============================\n")
 
     return problems

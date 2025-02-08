@@ -27,7 +27,6 @@ const App = () => {
         fetchProblem();  // Fetch the first problem on page load
     }, []);
 
-    // Function to replace {math_x} placeholders with corresponding images
     const renderProblemStatement = (statement, images) => {
         if (!statement) return null;
 
@@ -58,9 +57,19 @@ const App = () => {
             {problem && (
                 <div style={{ marginBottom: "20px", padding: "15px", border: "1px solid #ddd", borderRadius: "5px" }}>
                     <h3>{problem.title}</h3>
-
-                    {/* Render problem statement with correctly placed math images */}
                     <p>{renderProblemStatement(problem.problem_statement, problem.math_images)}</p>
+
+                    {/* 🔥 NEW: Display Answer Choices Image */}
+                    {problem.answer_choices && (
+                        <div style={{ marginTop: "10px" }}>
+                            <b>Answer Choices:</b>
+                            <img 
+                                src={problem.answer_choices} 
+                                alt="Answer Choices" 
+                                style={{ display: "block", marginTop: "10px", maxWidth: "100%" }} 
+                            />
+                        </div>
+                    )}
 
                     {/* Render Screenshot Images */}
                     {problem.screenshot_images.length > 0 && (
