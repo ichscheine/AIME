@@ -1,17 +1,8 @@
 [
     {
-        "title": "Problem 11",
-        "problem_statement": "How many ordered pairs of integers {math_0} satisfy {math_1} ?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/9/8/b/98b7e4c455672c30d743cce7506408a40cb68129.png",
-            "https://latex.artofproblemsolving.com/b/5/3/b534ed87dba9752e4140ebde292065c2422c6b7e.png",
-            "https://latex.artofproblemsolving.com/2/1/3/21383fde8fcf1144c117b1e635f65f152e94ba55.png"
-        ]
-    },
-    {
         "title": "Problem 18",
         "problem_statement": "There are exactly {math_0} positive integers {math_1} such that the base- {math_2} integer {math_3} is divisible by {math_4} (where {math_5} is in base ten). What is the sum of the digits of {math_6} ?{math_0} ",
-        "image_urls": [
+        "math_images": [
             "https://latex.artofproblemsolving.com/d/f/b/dfb064112b6c94470339f6571f69d07afc1c024c.png",
             "https://latex.artofproblemsolving.com/2/7/1/2711eb2dc25769cbe373239e85167e31bd40e179.png",
             "https://latex.artofproblemsolving.com/8/1/3/8136a7ef6a03334a7246df9097e5bcc31ba33fd2.png",
@@ -20,30 +11,134 @@
             "https://latex.artofproblemsolving.com/9/a/5/9a5b4928c8fe50ce3c2428da3bee3505e891b788.png",
             "https://latex.artofproblemsolving.com/d/f/b/dfb064112b6c94470339f6571f69d07afc1c024c.png",
             "https://latex.artofproblemsolving.com/c/f/9/cf96babf1b54ba8732d2a3e1aa019b9f6fa7ab4c.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 5",
+        "problem_statement": "What is the least value of {math_0} such that {math_1} is a multiple of {math_2} ?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/1/7/4/174fadd07fd54c9afe288e96558c92e0c1da733a.png",
+            "https://latex.artofproblemsolving.com/6/3/f/63f344e7d8b14a7886fc7fb72da53cd0a3271dcc.png",
+            "https://latex.artofproblemsolving.com/e/5/7/e5711c8d31d3bc3119aba377c9bda0f9dfb14e4b.png",
+            "https://latex.artofproblemsolving.com/7/4/e/74eac9e94d283cd73f2e42dcab5d199da3da30da.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 20",
+        "problem_statement": "Let {math_0} be a subset of {math_1} such that the following two conditions hold:What is the maximum possible number of elements in {math_0} ?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/a/d/2/ad28c83c99a8fd0dd2e2e594c9d02ee532765a0a.png",
+            "https://latex.artofproblemsolving.com/c/d/1/cd1bcb429e98e69ab2cfcaa919f33240b37c077f.png",
+            "https://latex.artofproblemsolving.com/a/d/2/ad28c83c99a8fd0dd2e2e594c9d02ee532765a0a.png",
+            "https://latex.artofproblemsolving.com/1/b/5/1b5b9480d9fb626762ffca695027b77a5d84a3a5.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 15",
+        "problem_statement": "Let {math_0} be the greatest integer such that both {math_1} and {math_2} are perfect squares. What is the units digit of {math_3} ?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/5/d/1/5d1e4485dc90c450e8c76826516c1b2ccb8fce16.png",
+            "https://latex.artofproblemsolving.com/6/7/1/6714463de67fa9c6439d5e31867fa5048f4c20cc.png",
+            "https://latex.artofproblemsolving.com/4/d/2/4d2499f64ed0073ce407d3ed27dce7b4a037e92a.png",
+            "https://latex.artofproblemsolving.com/5/d/1/5d1e4485dc90c450e8c76826516c1b2ccb8fce16.png",
+            "https://latex.artofproblemsolving.com/b/c/2/bc209ca9d96cd32011748a9aa6b40d3bce51d5b0.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 22",
+        "problem_statement": "Let {math_0} be the kite formed by joining two right triangles with legs {math_1} and {math_2} along a common hypotenuse. Eight copies of {math_3} are used to form the polygon shown below. What is the area of triangle {math_4} ? {math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/c/f/c/cfcc6a13c7635166a1ca01ad7151502a0bbe8850.png",
+            "https://latex.artofproblemsolving.com/d/c/e/dce34f4dfb2406144304ad0d6106c5382ddd1446.png",
+            "https://latex.artofproblemsolving.com/c/9/9/c99f089046b752269e77100c333b11d8d72e5895.png",
+            "https://latex.artofproblemsolving.com/c/f/c/cfcc6a13c7635166a1ca01ad7151502a0bbe8850.png",
+            "https://latex.artofproblemsolving.com/3/b/6/3b6d5d23a7e91fb9f6c248fb4cd43111165540f9.png",
+            "https://latex.artofproblemsolving.com/3/6/d/36dec25628628fdcf6b5981ec70c1f3436727389.png"
+        ],
+        "screenshot_images": [
+            "https://wiki-images.artofproblemsolving.com//e/e8/Screenshot_2024-11-08_3.23.29_PM.png"
         ]
     },
     {
-        "title": "Problem 21",
-        "problem_statement": "The numbers, in order, of each row and the numbers, in order, of each column of a {math_0} array of integers form an arithmetic progression of length {math_1} . The numbers in positions {math_2} , {math_3} , {math_4} and {math_5} are {math_6} , {math_7} , {math_8} , and {math_9} , respectively. What number is in position {math_10} ?  {math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/1/9/7/197151a067f49bd4daa1952d1a4fac322409f0a6.png",
+        "title": "Problem 11",
+        "problem_statement": "How many ordered pairs of integers {math_0} satisfy {math_1} ?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/9/8/b/98b7e4c455672c30d743cce7506408a40cb68129.png",
+            "https://latex.artofproblemsolving.com/b/5/3/b534ed87dba9752e4140ebde292065c2422c6b7e.png",
+            "https://latex.artofproblemsolving.com/2/1/3/21383fde8fcf1144c117b1e635f65f152e94ba55.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 19",
+        "problem_statement": "The first three terms of a geometric sequence are the integers {math_0} and {math_1} , where {math_2} . What is the sum of the digits of the least possible value of {math_3} ?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/9/8/a/98a07d3255ef3b579d46b267ea8577bcd7a9cbfc.png",
+            "https://latex.artofproblemsolving.com/8/1/3/8136a7ef6a03334a7246df9097e5bcc31ba33fd2.png",
+            "https://latex.artofproblemsolving.com/6/0/8/60814552e469ad9b3da12c088da00b12c87f2b39.png",
+            "https://latex.artofproblemsolving.com/8/1/3/8136a7ef6a03334a7246df9097e5bcc31ba33fd2.png",
+            "https://latex.artofproblemsolving.com/d/a/3/da35e4e0f435164393d0b371796d36e80aee68a9.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 12",
+        "problem_statement": "Zelda played the game on August 1 and scored {math_0} points. She continued to play daily over the next {math_1} days. The bar chart below shows the daily change in her score compared to the day before. (For example, Zelda's score on August 2 was {math_2} points.) What was Zelda's average score in points over the {math_3} days? {math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/e/2/a/e2a22af667234cd38d38be191d3f67d9e47b28f3.png",
             "https://latex.artofproblemsolving.com/7/9/0/79069377f91364c2f87a64e5f9f562a091c8a6c1.png",
-            "https://latex.artofproblemsolving.com/c/4/b/c4b6a364920ec84c82c57831adffe0e2ad2b9be6.png",
-            "https://latex.artofproblemsolving.com/4/c/6/4c6f0e4cd615eb4d118bf243be6594935ad3de9c.png",
-            "https://latex.artofproblemsolving.com/7/3/4/7347741cade420c9172f1251847efddfdeb489ca.png",
-            "https://latex.artofproblemsolving.com/d/2/6/d261236ea904095d8d185a456444545b5206013b.png",
-            "https://latex.artofproblemsolving.com/b/c/1/bc1f9d9bf8a1b606a4188b5ce9a2af1809e27a89.png",
-            "https://latex.artofproblemsolving.com/5/a/f/5afbad0b221f0ef70186fe70b08e6fc1efdd8dfa.png",
-            "https://latex.artofproblemsolving.com/9/a/5/9a5b4928c8fe50ce3c2428da3bee3505e891b788.png",
-            "https://latex.artofproblemsolving.com/e/d/f/edf074831eb5bc9e61d6d6e09f525a86e3068f6a.png",
-            "https://latex.artofproblemsolving.com/6/9/2/69273482bff8727194f6407e55ac1bfa94d9c555.png",
-            "https://latex.artofproblemsolving.com/d/2/c/d2cf15b30f9d570d6b0157dd8a82ea0b9fcf767a.png"
+            "https://latex.artofproblemsolving.com/5/4/d/54d1ca43ef4cac30c3fe51d22676533ef8d5a74c.png",
+            "https://latex.artofproblemsolving.com/6/0/1/601a7806cbfad68196c43a4665871f8c3186802e.png",
+            "https://latex.artofproblemsolving.com/9/a/1/9a19a4321249e1c442898cd92ff5fca5ff38c1fe.png"
+        ],
+        "screenshot_images": [
+            "https://wiki-images.artofproblemsolving.com//e/e6/Screenshot_2024-11-08_1.51.51_PM.png"
         ]
+    },
+    {
+        "title": "Problem 23",
+        "problem_statement": "Integers {math_0} , {math_1} , and {math_2} satisfy {math_3} , {math_4} , and {math_5} . What is {math_6} {math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/c/7/d/c7d457e388298246adb06c587bccd419ea67f7e8.png",
+            "https://latex.artofproblemsolving.com/8/1/3/8136a7ef6a03334a7246df9097e5bcc31ba33fd2.png",
+            "https://latex.artofproblemsolving.com/3/3/7/3372c1cb6d68cf97c2d231acc0b47b95a9ed04cc.png",
+            "https://latex.artofproblemsolving.com/6/6/f/66f068af84daf3c1e8d39c81dfcbdf9fcf3bb44c.png",
+            "https://latex.artofproblemsolving.com/4/0/a/40abf6b41cc8e9817bec6ff6fda227a259b9ec55.png",
+            "https://latex.artofproblemsolving.com/0/8/6/086d3e70f05f3e47dfbe7dca1192738ed163acfd.png",
+            "https://latex.artofproblemsolving.com/3/0/8/308172574a90cf20c5710b633f9474936e7baa2d.png",
+            "https://latex.artofproblemsolving.com/7/b/4/7b45c644d9c4d63a2cf3c46669113bc76c6575e3.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 25",
+        "problem_statement": "The figure below shows a dotted grid {math_0} cells wide and {math_1} cells tall consisting of {math_2} squares. Carl places {math_3} -inch toothpicks along some of the sides of the squares to create a closed loop that does not intersect itself. The numbers in the cells indicate the number of sides of that square that are to be covered by toothpicks, and any number of toothpicks are allowed if no number is written. In how many ways can Carl place the toothpicks?  {math_5} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/8/4/5/8455f3b5cb3b4880b8c9d782a5c1f0334db819eb.png",
+            "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
+            "https://latex.artofproblemsolving.com/f/0/e/f0eef328050ddc16d1b23dcb74f639d6cc51929d.png",
+            "https://latex.artofproblemsolving.com/d/c/e/dce34f4dfb2406144304ad0d6106c5382ddd1446.png",
+            "https://latex.artofproblemsolving.com/9/e/e/9ee7520b35052b8077ba79fd898b9bef30ce7e82.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 1",
+        "problem_statement": "What is the value of {math_0} {math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/a/8/5/a854d1a9a5672729a0cd5f1c58e35c196dc6cb19.png",
+            "https://latex.artofproblemsolving.com/9/8/6/98621ec5cbafd79bb4e0e1bb1d6852a3b014c4c7.png"
+        ],
+        "screenshot_images": []
     },
     {
         "title": "Problem 6",
         "problem_statement": "What is the minimum number of successive swaps of adjacent letters in the string {math_0} that are needed to change the string to {math_1} (For example, {math_2} swaps are required to change {math_3} to {math_4} one such sequence of swaps is {math_5} ){math_0} ",
-        "image_urls": [
+        "math_images": [
             "https://latex.artofproblemsolving.com/8/0/2/8029902caf855d940e465d04ff40101d8850c3e0.png",
             "https://latex.artofproblemsolving.com/1/f/0/1f0181dacee440ec414579fe73a564d2307c75e8.png",
             "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
@@ -51,220 +146,13 @@
             "https://latex.artofproblemsolving.com/7/4/7/747eb612b95cb550f5b0cf380e465fb41dafc300.png",
             "https://latex.artofproblemsolving.com/e/0/9/e091fc91dcdf30f76a71c0b343521b66a435b85c.png",
             "https://latex.artofproblemsolving.com/4/8/9/4899db3d1e73a119ba4f107f7c510246a73ef518.png"
-        ]
-    },
-    {
-        "title": "Problem 14",
-        "problem_statement": "One side of an equilateral triangle of height {math_0} lies on line {math_1} . A circle of radius {math_2} is tangent to line {math_3} and is externally tangent to the triangle. The area of the region exterior to the triangle and the circle and bounded by the triangle, the circle, and line {math_4} can be written as {math_5} , where {math_6} , {math_7} , and {math_8} are positive integers and {math_9} is not divisible by the square of any prime. What is {math_10} ?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/e/2/9/e290f2cba0ba0e11c0b91630da15a408da2fcf1c.png",
-            "https://latex.artofproblemsolving.com/6/3/c/63c17c295325f731666c7d74952b563a01e00fcc.png",
-            "https://latex.artofproblemsolving.com/e/d/f/edf074831eb5bc9e61d6d6e09f525a86e3068f6a.png",
-            "https://latex.artofproblemsolving.com/6/3/c/63c17c295325f731666c7d74952b563a01e00fcc.png",
-            "https://latex.artofproblemsolving.com/6/3/c/63c17c295325f731666c7d74952b563a01e00fcc.png",
-            "https://latex.artofproblemsolving.com/a/d/3/ad3b16d19ceb23145e015e9b09bb0f44a9ddb9a8.png",
-            "https://latex.artofproblemsolving.com/c/7/d/c7d457e388298246adb06c587bccd419ea67f7e8.png",
-            "https://latex.artofproblemsolving.com/8/1/3/8136a7ef6a03334a7246df9097e5bcc31ba33fd2.png",
-            "https://latex.artofproblemsolving.com/3/3/7/3372c1cb6d68cf97c2d231acc0b47b95a9ed04cc.png",
-            "https://latex.artofproblemsolving.com/8/1/3/8136a7ef6a03334a7246df9097e5bcc31ba33fd2.png",
-            "https://latex.artofproblemsolving.com/2/c/d/2cdfeae33c1e09de6207d446beb72396c04be481.png",
-            "https://latex.artofproblemsolving.com/e/0/4/e0423f3ae1b588e91e82ea1318d197fe55cb2b3e.png"
-        ]
-    },
-    {
-        "title": "Problem 2",
-        "problem_statement": "A model used to estimate the time it will take to hike to the top of the mountain on a trail is of the form {math_0} where {math_1} and {math_2} are constants, {math_3} is the time in minutes, {math_4} is the length of the trail in miles, and {math_5} is the altitude gain in feet. The model estimates that it will take {math_6} minutes to hike to the top if a trail is {math_7} miles long and ascends {math_8} feet, as well as if a trail is {math_9} miles long and ascends {math_10} feet. How many minutes does the model estimates it will take to hike to the top if the trail is {math_11} miles long and ascends {math_12} feet?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/b/6/d/b6d135980870b4364048215a8579f3f00bda2113.png",
-            "https://latex.artofproblemsolving.com/c/7/d/c7d457e388298246adb06c587bccd419ea67f7e8.png",
-            "https://latex.artofproblemsolving.com/8/1/3/8136a7ef6a03334a7246df9097e5bcc31ba33fd2.png",
-            "https://latex.artofproblemsolving.com/2/5/5/2554b6496c3b678897e9b060ef00aa9f0a7d7ece.png",
-            "https://latex.artofproblemsolving.com/8/5/9/859ccf4cd60c7bc6b8fa1afc9a42dc811a826d6f.png",
-            "https://latex.artofproblemsolving.com/6/e/2/6e28ce12d49d39f160d5a0ef54077fc98e4b9d2b.png",
-            "https://latex.artofproblemsolving.com/a/8/0/a80952a9a250e7257f7c6d64e763dae189dbb271.png",
-            "https://latex.artofproblemsolving.com/1/5/7/15788e198a53ced87268aea78fcde68a84de92c0.png",
-            "https://latex.artofproblemsolving.com/5/5/7/557a9700315ffdc6da28316197f148da6ee2a3ab.png",
-            "https://latex.artofproblemsolving.com/4/9/9/499e5d3fb13c7f899257773b0a1b7ebfc699d001.png",
-            "https://latex.artofproblemsolving.com/5/7/c/57c304fcf196b7b1f16c5153a5e33a12979ee260.png",
-            "https://latex.artofproblemsolving.com/5/5/c/55cd5096fdf88f4158d342806f650704472f9a96.png",
-            "https://latex.artofproblemsolving.com/0/9/2/0929ed034079c23455c385741744274c1f69b61b.png",
-            "https://latex.artofproblemsolving.com/d/7/e/d7e2252ee25aa3c3e2a5a2d1dd0e311c793d8b4c.png"
-        ]
-    },
-    {
-        "title": "Problem 17",
-        "problem_statement": "Two teams are in a best-two-out-of-three playoff: the teams will play at most {math_0} games, and the winner of the playoff is the first team to win {math_1} games. The first game is played on Team A's home field, and the remaining games are played on Team B's home field. Team A has a {math_2} chance of winning at home, and its probability of winning when playing away from home is {math_3} . Outcomes of the games are independent. The probability that Team A wins the playoff is {math_4} . Then {math_5} can be written in the form {math_6} , where {math_7} and {math_8} are positive integers. What is {math_9} ?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
-            "https://latex.artofproblemsolving.com/4/1/c/41c544263a265ff15498ee45f7392c5f86c6d151.png",
-            "https://latex.artofproblemsolving.com/7/5/4/7547747b133453d3c209cff6cfbf129aa67a6947.png",
-            "https://latex.artofproblemsolving.com/3/6/f/36f73fc1312ee0349b3f3a0f3bd9eb5504339011.png",
-            "https://latex.artofproblemsolving.com/2/f/9/2f960094315d60883495f9b74148e17487ee9584.png",
-            "https://latex.artofproblemsolving.com/3/6/f/36f73fc1312ee0349b3f3a0f3bd9eb5504339011.png",
-            "https://latex.artofproblemsolving.com/2/b/2/2b2b4b4f6e12cafe11ce83127f0b960808e2c457.png",
-            "https://latex.artofproblemsolving.com/f/5/0/f5047d1e0cbb50ec208923a22cd517c55100fa7b.png",
-            "https://latex.artofproblemsolving.com/1/7/4/174fadd07fd54c9afe288e96558c92e0c1da733a.png",
-            "https://latex.artofproblemsolving.com/0/2/d/02dbab3601fa6cce490d54263017048f69e1a35d.png",
-            "https://latex.artofproblemsolving.com/3/3/8/33894aad5c7104ee952df7d9fc9d4cbf83b2b775.png"
-        ]
-    },
-    {
-        "title": "Problem 9",
-        "problem_statement": "In how many ways can {math_0} juniors and {math_1} seniors form {math_2} disjoint teams of {math_3} people so \nthat each team has {math_4} juniors and {math_5} seniors?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/6/0/1/601a7806cbfad68196c43a4665871f8c3186802e.png",
-            "https://latex.artofproblemsolving.com/6/0/1/601a7806cbfad68196c43a4665871f8c3186802e.png",
-            "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
-            "https://latex.artofproblemsolving.com/c/7/c/c7cab1a05e1e0c1d51a6a219d96577a16b7abf9d.png",
-            "https://latex.artofproblemsolving.com/4/1/c/41c544263a265ff15498ee45f7392c5f86c6d151.png",
-            "https://latex.artofproblemsolving.com/4/1/c/41c544263a265ff15498ee45f7392c5f86c6d151.png",
-            "https://latex.artofproblemsolving.com/8/8/2/882e56c013aa7b4a88d21a3e9ca18496f64037f3.png"
-        ]
-    },
-    {
-        "title": "Problem 7",
-        "problem_statement": "The product of three integers is {math_0} . What is the least possible positive sum of the \nthree integers?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/3/0/2/302e99c1c7cd91a6ae371139e5142ccef5977dca.png",
-            "https://latex.artofproblemsolving.com/5/8/5/585c316a86e0ea3aa32e21c7c1028dcfca43b87c.png"
-        ]
-    },
-    {
-        "title": "Problem 13",
-        "problem_statement": "Two transformations are said to commute if applying the first followed by the second\ngives the same result as applying the second followed by the first. Consider these\nfour transformations of the coordinate plane:Of the {math_0} pairs of distinct transformations from this list, how many commute?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/6/0/1/601a7806cbfad68196c43a4665871f8c3186802e.png",
-            "https://latex.artofproblemsolving.com/2/0/8/2082e8b3e2a28527e04cf7456d93aef588888bab.png"
-        ]
-    },
-    {
-        "title": "Problem 22",
-        "problem_statement": "Let {math_0} be the kite formed by joining two right triangles with legs {math_1} and {math_2} along a common hypotenuse. Eight copies of {math_3} are used to form the polygon shown below. What is the area of triangle {math_4} ? {math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/c/f/c/cfcc6a13c7635166a1ca01ad7151502a0bbe8850.png",
-            "https://latex.artofproblemsolving.com/d/c/e/dce34f4dfb2406144304ad0d6106c5382ddd1446.png",
-            "https://latex.artofproblemsolving.com/c/9/9/c99f089046b752269e77100c333b11d8d72e5895.png",
-            "https://latex.artofproblemsolving.com/c/f/c/cfcc6a13c7635166a1ca01ad7151502a0bbe8850.png",
-            "https://latex.artofproblemsolving.com/3/b/6/3b6d5d23a7e91fb9f6c248fb4cd43111165540f9.png",
-            "https://latex.artofproblemsolving.com/3/6/d/36dec25628628fdcf6b5981ec70c1f3436727389.png"
-        ]
-    },
-    {
-        "title": "Problem 20",
-        "problem_statement": "Let {math_0} be a subset of {math_1} such that the following two conditions hold:What is the maximum possible number of elements in {math_0} ?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/a/d/2/ad28c83c99a8fd0dd2e2e594c9d02ee532765a0a.png",
-            "https://latex.artofproblemsolving.com/c/d/1/cd1bcb429e98e69ab2cfcaa919f33240b37c077f.png",
-            "https://latex.artofproblemsolving.com/a/d/2/ad28c83c99a8fd0dd2e2e594c9d02ee532765a0a.png",
-            "https://latex.artofproblemsolving.com/1/b/5/1b5b9480d9fb626762ffca695027b77a5d84a3a5.png"
-        ]
-    },
-    {
-        "title": "Problem 19",
-        "problem_statement": "The first three terms of a geometric sequence are the integers {math_0} and {math_1} , where {math_2} . What is the sum of the digits of the least possible value of {math_3} ?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/9/8/a/98a07d3255ef3b579d46b267ea8577bcd7a9cbfc.png",
-            "https://latex.artofproblemsolving.com/8/1/3/8136a7ef6a03334a7246df9097e5bcc31ba33fd2.png",
-            "https://latex.artofproblemsolving.com/6/0/8/60814552e469ad9b3da12c088da00b12c87f2b39.png",
-            "https://latex.artofproblemsolving.com/8/1/3/8136a7ef6a03334a7246df9097e5bcc31ba33fd2.png",
-            "https://latex.artofproblemsolving.com/d/a/3/da35e4e0f435164393d0b371796d36e80aee68a9.png"
-        ]
-    },
-    {
-        "title": "Problem 16",
-        "problem_statement": "All of the rectangles in the figure below, which is drawn to scale, are similar to the enclosing rectangle. Each number represents the area of the rectangle. What is length {math_0} ? {math_1}   {math_2} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/5/7/e/57ee5125358c0606c9b588580ddfa66f83e607b7.png",
-            "https://latex.artofproblemsolving.com/2/5/1/25175d0e269ed8d27eef5420fe041de8f3941aa3.png",
-            "https://latex.artofproblemsolving.com/2/f/a/2fada6ff95f8cf1420e501b8f1b4aa0030154bba.png"
-        ]
-    },
-    {
-        "title": "Problem 15",
-        "problem_statement": "Let {math_0} be the greatest integer such that both {math_1} and {math_2} are perfect squares. What is the units digit of {math_3} ?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/5/d/1/5d1e4485dc90c450e8c76826516c1b2ccb8fce16.png",
-            "https://latex.artofproblemsolving.com/6/7/1/6714463de67fa9c6439d5e31867fa5048f4c20cc.png",
-            "https://latex.artofproblemsolving.com/4/d/2/4d2499f64ed0073ce407d3ed27dce7b4a037e92a.png",
-            "https://latex.artofproblemsolving.com/5/d/1/5d1e4485dc90c450e8c76826516c1b2ccb8fce16.png",
-            "https://latex.artofproblemsolving.com/b/c/2/bc209ca9d96cd32011748a9aa6b40d3bce51d5b0.png"
-        ]
-    },
-    {
-        "title": "Problem 25",
-        "problem_statement": "The figure below shows a dotted grid {math_0} cells wide and {math_1} cells tall consisting of {math_2} squares. Carl places {math_3} -inch toothpicks along some of the sides of the squares to create a closed loop that does not intersect itself. The numbers in the cells indicate the number of sides of that square that are to be covered by toothpicks, and any number of toothpicks are allowed if no number is written. In how many ways can Carl place the toothpicks?  {math_4} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/8/4/5/8455f3b5cb3b4880b8c9d782a5c1f0334db819eb.png",
-            "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
-            "https://latex.artofproblemsolving.com/f/0/e/f0eef328050ddc16d1b23dcb74f639d6cc51929d.png",
-            "https://latex.artofproblemsolving.com/d/c/e/dce34f4dfb2406144304ad0d6106c5382ddd1446.png",
-            "https://latex.artofproblemsolving.com/9/e/e/9ee7520b35052b8077ba79fd898b9bef30ce7e82.png"
-        ]
-    },
-    {
-        "title": "See also",
-        "problem_statement": "",
-        "image_urls": []
-    },
-    {
-        "title": "Problem 1",
-        "problem_statement": "What is the value of {math_0} {math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/a/8/5/a854d1a9a5672729a0cd5f1c58e35c196dc6cb19.png",
-            "https://latex.artofproblemsolving.com/9/8/6/98621ec5cbafd79bb4e0e1bb1d6852a3b014c4c7.png"
-        ]
-    },
-    {
-        "title": "Problem 3",
-        "problem_statement": "What is the sum of the digits of the smallest prime that can be written as a sum of {math_0} distinct primes?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/7/9/0/79069377f91364c2f87a64e5f9f562a091c8a6c1.png",
-            "https://latex.artofproblemsolving.com/3/f/e/3fe1ff9e5d834a499fb0c2fc0b5597c94cacf1b5.png"
-        ]
-    },
-    {
-        "title": "Problem 4",
-        "problem_statement": "The number {math_0} is written as the sum of not necessarily distinct two-digit numbers. What is the least number of two-digit numbers needed to write this sum?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/e/5/7/e5711c8d31d3bc3119aba377c9bda0f9dfb14e4b.png",
-            "https://latex.artofproblemsolving.com/e/8/e/e8ecf9d14fe26c64447ab5b3f05bc8f1d248cfa2.png"
-        ]
-    },
-    {
-        "title": "Contents",
-        "problem_statement": "",
-        "image_urls": []
-    },
-    {
-        "title": "Problem 5",
-        "problem_statement": "What is the least value of {math_0} such that {math_1} is a multiple of {math_2} ?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/1/7/4/174fadd07fd54c9afe288e96558c92e0c1da733a.png",
-            "https://latex.artofproblemsolving.com/6/3/f/63f344e7d8b14a7886fc7fb72da53cd0a3271dcc.png",
-            "https://latex.artofproblemsolving.com/e/5/7/e5711c8d31d3bc3119aba377c9bda0f9dfb14e4b.png",
-            "https://latex.artofproblemsolving.com/7/4/e/74eac9e94d283cd73f2e42dcab5d199da3da30da.png"
-        ]
-    },
-    {
-        "title": "Problem 8",
-        "problem_statement": "Amy, Bomani, Charlie, and Daria work in a chocolate factory. On Monday Amy, Bomani, and Charlie started working at {math_0} and were able to pack {math_1} , {math_2} , and {math_3} packages, respectively, every {math_4} minutes. At some later time, Daria joined the group, and Daria was able to pack {math_5} packages every {math_6} minutes. Together, they finished packing {math_7} packages at exactly {math_8} . At what time did Daria join the group?{math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/7/6/2/7627237fe2e584814f13a7dbddfdb4006aaeb7be.png",
-            "https://latex.artofproblemsolving.com/c/7/c/c7cab1a05e1e0c1d51a6a219d96577a16b7abf9d.png",
-            "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
-            "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
-            "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
-            "https://latex.artofproblemsolving.com/7/9/0/79069377f91364c2f87a64e5f9f562a091c8a6c1.png",
-            "https://latex.artofproblemsolving.com/c/7/c/c7cab1a05e1e0c1d51a6a219d96577a16b7abf9d.png",
-            "https://latex.artofproblemsolving.com/4/7/3/4739126bff84658daf38a400b94af84c72f11fa0.png",
-            "https://latex.artofproblemsolving.com/3/7/4/374e47f3350add5fdd4d8f1519531175582f7416.png",
-            "https://latex.artofproblemsolving.com/c/7/d/c7da246f1d1994edee6f5e51a50938a561ff68ea.png"
-        ]
+        ],
+        "screenshot_images": []
     },
     {
         "title": "Problem 24",
         "problem_statement": "A bee is moving in three-dimensional space. A fair six-sided die with faces labeled {math_0} and {math_1} is rolled. Suppose the bee occupies the point {math_2} If the die shows {math_3} , then the bee moves to the point {math_4} and if the die shows {math_5} then the bee moves to the point {math_6} Analogous moves are made with the other four outcomes. Suppose the bee starts at the point {math_7} and the die is rolled four times. What is the probability that the bee traverses four distinct edges of some unit cube?{math_0} ",
-        "image_urls": [
+        "math_images": [
             "https://latex.artofproblemsolving.com/4/4/9/449c60cab43b50481f025124e9d9fe8bc8398b4a.png",
             "https://latex.artofproblemsolving.com/1/d/1/1d1021c1acac47919e9327c87430c1fe1caf5617.png",
             "https://latex.artofproblemsolving.com/e/3/e/e3e4ce6135f44658120400b12106ad7ced4cd72f.png",
@@ -274,12 +162,22 @@
             "https://latex.artofproblemsolving.com/8/4/f/84f3b75075c0a15aedc6d0827cecdf971b40260e.png",
             "https://latex.artofproblemsolving.com/4/e/9/4e9f36b13a11a14accae8e072c0cf34d69267bb6.png",
             "https://latex.artofproblemsolving.com/0/a/8/0a8e8464b679a95e564f41d949dc5bdde7760e7a.png"
-        ]
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 4",
+        "problem_statement": "The number {math_0} is written as the sum of not necessarily distinct two-digit numbers. What is the least number of two-digit numbers needed to write this sum?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/e/5/7/e5711c8d31d3bc3119aba377c9bda0f9dfb14e4b.png",
+            "https://latex.artofproblemsolving.com/e/8/e/e8ecf9d14fe26c64447ab5b3f05bc8f1d248cfa2.png"
+        ],
+        "screenshot_images": []
     },
     {
         "title": "Problem 10",
         "problem_statement": "Consider the following operation. Given a positive integer {math_0} , if {math_1} is a multiple of {math_2} , then you replace {math_3} by {math_4} . If {math_5} is not a multiple of {math_6} , then you replace {math_7} by {math_8} . For example, beginning with {math_9} , this procedure gives {math_10} . Suppose you start with {math_11} . What value results if you perform this operation exactly {math_12} times?{math_0} ",
-        "image_urls": [
+        "math_images": [
             "https://latex.artofproblemsolving.com/1/7/4/174fadd07fd54c9afe288e96558c92e0c1da733a.png",
             "https://latex.artofproblemsolving.com/1/7/4/174fadd07fd54c9afe288e96558c92e0c1da733a.png",
             "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
@@ -294,31 +192,166 @@
             "https://latex.artofproblemsolving.com/8/a/3/8a3a84af200a7370473abe7c5c58f6784a64a222.png",
             "https://latex.artofproblemsolving.com/e/5/9/e59e2c6e83eb78cca610a5fd4070ae01c8d4ae60.png",
             "https://latex.artofproblemsolving.com/0/1/2/012772390328aea4e3e20823ef884ab1e5d98024.png"
-        ]
+        ],
+        "screenshot_images": []
     },
     {
-        "title": "Problem 23",
-        "problem_statement": "Integers {math_0} , {math_1} , and {math_2} satisfy {math_3} , {math_4} , and {math_5} . What is {math_6} {math_0} ",
-        "image_urls": [
+        "title": "Problem 9",
+        "problem_statement": "In how many ways can {math_0} juniors and {math_1} seniors form {math_2} disjoint teams of {math_3} people so \nthat each team has {math_4} juniors and {math_5} seniors?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/6/0/1/601a7806cbfad68196c43a4665871f8c3186802e.png",
+            "https://latex.artofproblemsolving.com/6/0/1/601a7806cbfad68196c43a4665871f8c3186802e.png",
+            "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
+            "https://latex.artofproblemsolving.com/c/7/c/c7cab1a05e1e0c1d51a6a219d96577a16b7abf9d.png",
+            "https://latex.artofproblemsolving.com/4/1/c/41c544263a265ff15498ee45f7392c5f86c6d151.png",
+            "https://latex.artofproblemsolving.com/4/1/c/41c544263a265ff15498ee45f7392c5f86c6d151.png",
+            "https://latex.artofproblemsolving.com/8/8/2/882e56c013aa7b4a88d21a3e9ca18496f64037f3.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 8",
+        "problem_statement": "Amy, Bomani, Charlie, and Daria work in a chocolate factory. On Monday Amy, Bomani, and Charlie started working at {math_0} and were able to pack {math_1} , {math_2} , and {math_3} packages, respectively, every {math_4} minutes. At some later time, Daria joined the group, and Daria was able to pack {math_5} packages every {math_6} minutes. Together, they finished packing {math_7} packages at exactly {math_8} . At what time did Daria join the group?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/7/6/2/7627237fe2e584814f13a7dbddfdb4006aaeb7be.png",
+            "https://latex.artofproblemsolving.com/c/7/c/c7cab1a05e1e0c1d51a6a219d96577a16b7abf9d.png",
+            "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
+            "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
+            "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
+            "https://latex.artofproblemsolving.com/7/9/0/79069377f91364c2f87a64e5f9f562a091c8a6c1.png",
+            "https://latex.artofproblemsolving.com/c/7/c/c7cab1a05e1e0c1d51a6a219d96577a16b7abf9d.png",
+            "https://latex.artofproblemsolving.com/4/7/3/4739126bff84658daf38a400b94af84c72f11fa0.png",
+            "https://latex.artofproblemsolving.com/3/7/4/374e47f3350add5fdd4d8f1519531175582f7416.png",
+            "https://latex.artofproblemsolving.com/c/7/d/c7da246f1d1994edee6f5e51a50938a561ff68ea.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 17",
+        "problem_statement": "Two teams are in a best-two-out-of-three playoff: the teams will play at most {math_0} games, and the winner of the playoff is the first team to win {math_1} games. The first game is played on Team A's home field, and the remaining games are played on Team B's home field. Team A has a {math_2} chance of winning at home, and its probability of winning when playing away from home is {math_3} . Outcomes of the games are independent. The probability that Team A wins the playoff is {math_4} . Then {math_5} can be written in the form {math_6} , where {math_7} and {math_8} are positive integers. What is {math_9} ?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/7/c/d/7cde695f2e4542fd01f860a89189f47a27143b66.png",
+            "https://latex.artofproblemsolving.com/4/1/c/41c544263a265ff15498ee45f7392c5f86c6d151.png",
+            "https://latex.artofproblemsolving.com/7/5/4/7547747b133453d3c209cff6cfbf129aa67a6947.png",
+            "https://latex.artofproblemsolving.com/3/6/f/36f73fc1312ee0349b3f3a0f3bd9eb5504339011.png",
+            "https://latex.artofproblemsolving.com/2/f/9/2f960094315d60883495f9b74148e17487ee9584.png",
+            "https://latex.artofproblemsolving.com/3/6/f/36f73fc1312ee0349b3f3a0f3bd9eb5504339011.png",
+            "https://latex.artofproblemsolving.com/2/b/2/2b2b4b4f6e12cafe11ce83127f0b960808e2c457.png",
+            "https://latex.artofproblemsolving.com/f/5/0/f5047d1e0cbb50ec208923a22cd517c55100fa7b.png",
+            "https://latex.artofproblemsolving.com/1/7/4/174fadd07fd54c9afe288e96558c92e0c1da733a.png",
+            "https://latex.artofproblemsolving.com/0/2/d/02dbab3601fa6cce490d54263017048f69e1a35d.png",
+            "https://latex.artofproblemsolving.com/3/3/8/33894aad5c7104ee952df7d9fc9d4cbf83b2b775.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 14",
+        "problem_statement": "One side of an equilateral triangle of height {math_0} lies on line {math_1} . A circle of radius {math_2} is tangent to line {math_3} and is externally tangent to the triangle. The area of the region exterior to the triangle and the circle and bounded by the triangle, the circle, and line {math_4} can be written as {math_5} , where {math_6} , {math_7} , and {math_8} are positive integers and {math_9} is not divisible by the square of any prime. What is {math_10} ?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/e/2/9/e290f2cba0ba0e11c0b91630da15a408da2fcf1c.png",
+            "https://latex.artofproblemsolving.com/6/3/c/63c17c295325f731666c7d74952b563a01e00fcc.png",
+            "https://latex.artofproblemsolving.com/e/d/f/edf074831eb5bc9e61d6d6e09f525a86e3068f6a.png",
+            "https://latex.artofproblemsolving.com/6/3/c/63c17c295325f731666c7d74952b563a01e00fcc.png",
+            "https://latex.artofproblemsolving.com/6/3/c/63c17c295325f731666c7d74952b563a01e00fcc.png",
+            "https://latex.artofproblemsolving.com/a/d/3/ad3b16d19ceb23145e015e9b09bb0f44a9ddb9a8.png",
             "https://latex.artofproblemsolving.com/c/7/d/c7d457e388298246adb06c587bccd419ea67f7e8.png",
             "https://latex.artofproblemsolving.com/8/1/3/8136a7ef6a03334a7246df9097e5bcc31ba33fd2.png",
             "https://latex.artofproblemsolving.com/3/3/7/3372c1cb6d68cf97c2d231acc0b47b95a9ed04cc.png",
-            "https://latex.artofproblemsolving.com/6/6/f/66f068af84daf3c1e8d39c81dfcbdf9fcf3bb44c.png",
-            "https://latex.artofproblemsolving.com/4/0/a/40abf6b41cc8e9817bec6ff6fda227a259b9ec55.png",
-            "https://latex.artofproblemsolving.com/0/8/6/086d3e70f05f3e47dfbe7dca1192738ed163acfd.png",
-            "https://latex.artofproblemsolving.com/3/0/8/308172574a90cf20c5710b633f9474936e7baa2d.png",
-            "https://latex.artofproblemsolving.com/7/b/4/7b45c644d9c4d63a2cf3c46669113bc76c6575e3.png"
+            "https://latex.artofproblemsolving.com/8/1/3/8136a7ef6a03334a7246df9097e5bcc31ba33fd2.png",
+            "https://latex.artofproblemsolving.com/2/c/d/2cdfeae33c1e09de6207d446beb72396c04be481.png",
+            "https://latex.artofproblemsolving.com/e/0/4/e0423f3ae1b588e91e82ea1318d197fe55cb2b3e.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 3",
+        "problem_statement": "What is the sum of the digits of the smallest prime that can be written as a sum of {math_0} distinct primes?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/7/9/0/79069377f91364c2f87a64e5f9f562a091c8a6c1.png",
+            "https://latex.artofproblemsolving.com/3/f/e/3fe1ff9e5d834a499fb0c2fc0b5597c94cacf1b5.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 2",
+        "problem_statement": "A model used to estimate the time it will take to hike to the top of the mountain on a trail is of the form {math_0} where {math_1} and {math_2} are constants, {math_3} is the time in minutes, {math_4} is the length of the trail in miles, and {math_5} is the altitude gain in feet. The model estimates that it will take {math_6} minutes to hike to the top if a trail is {math_7} miles long and ascends {math_8} feet, as well as if a trail is {math_9} miles long and ascends {math_10} feet. How many minutes does the model estimates it will take to hike to the top if the trail is {math_11} miles long and ascends {math_12} feet?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/b/6/d/b6d135980870b4364048215a8579f3f00bda2113.png",
+            "https://latex.artofproblemsolving.com/c/7/d/c7d457e388298246adb06c587bccd419ea67f7e8.png",
+            "https://latex.artofproblemsolving.com/8/1/3/8136a7ef6a03334a7246df9097e5bcc31ba33fd2.png",
+            "https://latex.artofproblemsolving.com/2/5/5/2554b6496c3b678897e9b060ef00aa9f0a7d7ece.png",
+            "https://latex.artofproblemsolving.com/8/5/9/859ccf4cd60c7bc6b8fa1afc9a42dc811a826d6f.png",
+            "https://latex.artofproblemsolving.com/6/e/2/6e28ce12d49d39f160d5a0ef54077fc98e4b9d2b.png",
+            "https://latex.artofproblemsolving.com/a/8/0/a80952a9a250e7257f7c6d64e763dae189dbb271.png",
+            "https://latex.artofproblemsolving.com/1/5/7/15788e198a53ced87268aea78fcde68a84de92c0.png",
+            "https://latex.artofproblemsolving.com/5/5/7/557a9700315ffdc6da28316197f148da6ee2a3ab.png",
+            "https://latex.artofproblemsolving.com/4/9/9/499e5d3fb13c7f899257773b0a1b7ebfc699d001.png",
+            "https://latex.artofproblemsolving.com/5/7/c/57c304fcf196b7b1f16c5153a5e33a12979ee260.png",
+            "https://latex.artofproblemsolving.com/5/5/c/55cd5096fdf88f4158d342806f650704472f9a96.png",
+            "https://latex.artofproblemsolving.com/0/9/2/0929ed034079c23455c385741744274c1f69b61b.png",
+            "https://latex.artofproblemsolving.com/d/7/e/d7e2252ee25aa3c3e2a5a2d1dd0e311c793d8b4c.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 13",
+        "problem_statement": "Two transformations are said to commute if applying the first followed by the second\ngives the same result as applying the second followed by the first. Consider these\nfour transformations of the coordinate plane:Of the {math_0} pairs of distinct transformations from this list, how many commute?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/6/0/1/601a7806cbfad68196c43a4665871f8c3186802e.png",
+            "https://latex.artofproblemsolving.com/2/0/8/2082e8b3e2a28527e04cf7456d93aef588888bab.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 7",
+        "problem_statement": "The product of three integers is {math_0} . What is the least possible positive sum of the \nthree integers?{math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/3/0/2/302e99c1c7cd91a6ae371139e5142ccef5977dca.png",
+            "https://latex.artofproblemsolving.com/5/8/5/585c316a86e0ea3aa32e21c7c1028dcfca43b87c.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 21",
+        "problem_statement": "The numbers, in order, of each row and the numbers, in order, of each column of a {math_0} array of integers form an arithmetic progression of length {math_1} . The numbers in positions {math_2} , {math_3} , {math_4} and {math_5} are {math_6} , {math_7} , {math_8} , and {math_9} , respectively. What number is in position {math_10} ?  {math_0} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/1/9/7/197151a067f49bd4daa1952d1a4fac322409f0a6.png",
+            "https://latex.artofproblemsolving.com/7/9/0/79069377f91364c2f87a64e5f9f562a091c8a6c1.png",
+            "https://latex.artofproblemsolving.com/c/4/b/c4b6a364920ec84c82c57831adffe0e2ad2b9be6.png",
+            "https://latex.artofproblemsolving.com/4/c/6/4c6f0e4cd615eb4d118bf243be6594935ad3de9c.png",
+            "https://latex.artofproblemsolving.com/7/3/4/7347741cade420c9172f1251847efddfdeb489ca.png",
+            "https://latex.artofproblemsolving.com/d/2/6/d261236ea904095d8d185a456444545b5206013b.png",
+            "https://latex.artofproblemsolving.com/b/c/1/bc1f9d9bf8a1b606a4188b5ce9a2af1809e27a89.png",
+            "https://latex.artofproblemsolving.com/5/a/f/5afbad0b221f0ef70186fe70b08e6fc1efdd8dfa.png",
+            "https://latex.artofproblemsolving.com/9/a/5/9a5b4928c8fe50ce3c2428da3bee3505e891b788.png",
+            "https://latex.artofproblemsolving.com/e/d/f/edf074831eb5bc9e61d6d6e09f525a86e3068f6a.png",
+            "https://latex.artofproblemsolving.com/6/9/2/69273482bff8727194f6407e55ac1bfa94d9c555.png",
+            "https://latex.artofproblemsolving.com/d/2/c/d2cf15b30f9d570d6b0157dd8a82ea0b9fcf767a.png"
+        ],
+        "screenshot_images": []
+    },
+    {
+        "title": "Contents",
+        "problem_statement": "",
+        "math_images": [],
+        "screenshot_images": []
+    },
+    {
+        "title": "Problem 16",
+        "problem_statement": "All of the rectangles in the figure below, which is drawn to scale, are similar to the enclosing rectangle. Each number represents the area of the rectangle. What is length {math_0} ? {math_1}   {math_2} ",
+        "math_images": [
+            "https://latex.artofproblemsolving.com/5/7/e/57ee5125358c0606c9b588580ddfa66f83e607b7.png",
+            "https://latex.artofproblemsolving.com/2/5/1/25175d0e269ed8d27eef5420fe041de8f3941aa3.png",
+            "https://latex.artofproblemsolving.com/2/f/a/2fada6ff95f8cf1420e501b8f1b4aa0030154bba.png"
+        ],
+        "screenshot_images": [
+            "https://wiki-images.artofproblemsolving.com//c/c3/Screenshot_2024-11-08_2.08.49_PM.png"
         ]
     },
     {
-        "title": "Problem 12",
-        "problem_statement": "Zelda played the game on August 1 and scored {math_0} points. She continued to play daily over the next {math_1} days. The bar chart below shows the daily change in her score compared to the day before. (For example, Zelda's score on August 2 was {math_2} points.) What was Zelda's average score in points over the {math_3} days? {math_0} ",
-        "image_urls": [
-            "https://latex.artofproblemsolving.com/e/2/a/e2a22af667234cd38d38be191d3f67d9e47b28f3.png",
-            "https://latex.artofproblemsolving.com/7/9/0/79069377f91364c2f87a64e5f9f562a091c8a6c1.png",
-            "https://latex.artofproblemsolving.com/5/4/d/54d1ca43ef4cac30c3fe51d22676533ef8d5a74c.png",
-            "https://latex.artofproblemsolving.com/6/0/1/601a7806cbfad68196c43a4665871f8c3186802e.png",
-            "https://latex.artofproblemsolving.com/9/a/1/9a19a4321249e1c442898cd92ff5fca5ff38c1fe.png"
-        ]
+        "title": "See also",
+        "problem_statement": "",
+        "math_images": [],
+        "screenshot_images": []
     }
 ]

@@ -4,10 +4,11 @@ import json
 import random
 
 URL = "https://artofproblemsolving.com/wiki/index.php/2024_AMC_10A_Problems"
-LATEX_BASE_URL = "https:"  # AoPS LaTeX images use relative URLs
+LATEX_BASE_URL = "https:"  # Ensure LaTeX images are absolute URLs
+WIKI_IMAGE_BASE_URL = "https:"  # Ensure Screenshot images are absolute URLs
 
 def scrape_problems(url):
-    """Scrape problems and correctly insert placeholders for LaTeX images."""
+    """Scrape problems and correctly capture LaTeX math and large screenshots."""
     response = requests.get(url)
     if response.status_code != 200:
         print(f"Error: Failed to fetch {url}")
@@ -22,12 +23,17 @@ def scrape_problems(url):
     problems = []
     current_problem = None
 
-    for elem in content_div.find_all(["h2", "p"]):
+    for elem in content_div.find_all(["h2", "p", "figure", "table", "a"]):
         if elem.name == "h2":
             if current_problem:
                 problems.append(current_problem)  # Save previous problem
             problem_title = elem.get_text(strip=True)
-            current_problem = {"title": problem_title, "problem_statement": "", "image_urls": []}
+            current_problem = {
+                "title": problem_title,
+                "problem_statement": "",
+                "math_images": [],
+                "screenshot_images": []
+            }
 
         elif elem.name == "p" and current_problem:
             text_parts = []
@@ -37,16 +43,41 @@ def scrape_problems(url):
                 if isinstance(part, str):
                     text_parts.append(part.strip())
 
-                elif part.name == "img" and "latex" in part.get("class", []):
-                    img_src = LATEX_BASE_URL + part["src"]
-                    current_problem["image_urls"].append(img_src)
-                    text_parts.append(f"{{math_{image_counter}}}")  # Unique placeholder
+                elif part.name == "img":
+                    img_src = part["src"]
+
+                    if "latex.artofproblemsolving.com" in img_src:  # Math image
+                        full_img_src = LATEX_BASE_URL + img_src  # Ensure full URL
+                        current_problem["math_images"].append(full_img_src)
+                        text_parts.append(f"{{math_{image_counter}}}")
+                    
+                    elif "wiki-images.artofproblemsolving.com" in img_src:  # Large Screenshot images
+                        full_img_src = img_src  # Full URL already present
+                        current_problem["screenshot_images"].append(full_img_src)
+
                     image_counter += 1
 
             current_problem["problem_statement"] += " ".join(text_parts)
 
+        elif elem.name == "a" and current_problem:  # Ensure screenshots in links are captured
+            img_tag = elem.find("img")
+            if img_tag:
+                img_src = img_tag["src"]
+                if "wiki-images.artofproblemsolving.com" in img_src:
+                    full_img_src = img_src  # Full URL already present
+                    current_problem["screenshot_images"].append(full_img_src)
+
     if current_problem:
         problems.append(current_problem)
+
+    # Debugging Output - Check captured images
+    for problem in problems[:5]:
+        print("==== Debugging Scraper Output ====")
+        print(f"Title: {problem['title']}")
+        print(f"Statement: {problem['problem_statement']}")
+        print(f"Math Images: {problem['math_images']}")
+        print(f"Screenshot Images: {problem['screenshot_images']}")
+        print("===============================\n")
 
     return problems
 
