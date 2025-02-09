@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ problem.title }}</title> <!-- Title of the problem -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>AMC 10 Problem</title>
+    <link rel="stylesheet" href="%PUBLIC_URL%/styles.css">
     <script type="text/javascript" async
       src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
     </script>
@@ -16,38 +16,6 @@
     </script>
 </head>
 <body>
-    <div id="problem-container">
-        <!-- Displaying the Problem Title -->
-        <h1>{{ problem.title }}</h1>
-
-        <!-- Problem Statement -->
-        <div id="problem_statement">
-            <p>
-                {% set statement = problem.problem_statement %}
-                <!-- Replace math image placeholders -->
-                {% for i in range(problem.math_images|length) %}
-                    {% set placeholder = '{math_image_' ~ i ~ '}' %}
-                    {% set img_tag = '<img src="' ~ problem.math_images[i] ~ '" alt="math_image">' %}
-                    {% set statement = statement | replace(placeholder, img_tag) %}
-                {% endfor %}
-                <!-- Replace screenshot image placeholders -->
-                {% for i in range(problem.screenshot_images|length) %}
-                    {% set placeholder = '{screenshot_image_' ~ i ~ '}' %}
-                    {% set img_tag = '<img src="' ~ problem.screenshot_images[i] ~ '" alt="screenshot_image">' %}
-                    {% set statement = statement | replace(placeholder, img_tag) %}
-                {% endfor %}
-                <!-- Render the final statement -->
-                {{ statement | safe }}
-            </p>
-        </div>
-
-        <!-- Answer Choices Section -->
-        <div id="answer_choices">
-          <h2>Answer Choices</h2>
-              {% for answer in problem.answer_choices %}
-                      <img src="{{ answer }}" alt="Answer Choice">
-              {% endfor %}
-        </div>
-      </div>
+    <div id="root"></div> <!-- React app will mount here -->
 </body>
 </html>

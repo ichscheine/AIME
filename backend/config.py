@@ -64,12 +64,14 @@ def scrape_problems(url):
                         else:
                             if full_img_src not in current_problem["math_images"]:
                                 current_problem["math_images"].append(full_img_src)
-                        text_parts.append(f"{{math_image_{len(current_problem['math_images']) - 1}}}")
+                                placeholder = f"{{math_image_{len(current_problem['math_images']) - 1}}}"
+                                text_parts.append(placeholder)
                     elif "wiki-images.artofproblemsolving.com" in img_src:  # Screenshot image
                         full_img_src = img_src  # Full URL already present
                         if full_img_src not in current_problem["screenshot_images"]:
                             current_problem["screenshot_images"].append(full_img_src)
-                        text_parts.append(f"{{screenshot_image_{len(current_problem['screenshot_images']) - 1}}}")
+                            placeholder = f"{{screenshot_image_{len(current_problem['screenshot_images']) - 1}}}"
+                            text_parts.append(placeholder)
             current_problem["problem_statement"] += " ".join(text_parts)
 
         elif elem.name == "ul" and current_problem:
@@ -89,12 +91,14 @@ def scrape_problems(url):
                             else:
                                 if full_img_src not in current_problem["math_images"]:
                                     current_problem["math_images"].append(full_img_src)
-                            text_parts.append(f"{{math_image_{len(current_problem['math_images']) - 1}}}")
+                                    placeholder = f"{{math_image_{len(current_problem['math_images']) - 1}}}"
+                                    text_parts.append(placeholder)
                         elif "wiki-images.artofproblemsolving.com" in img_src:  # Screenshot image
                             full_img_src = img_src  # Full URL already present
                             if full_img_src not in current_problem["screenshot_images"]:
                                 current_problem["screenshot_images"].append(full_img_src)
-                            text_parts.append(f"{{screenshot_image_{len(current_problem['screenshot_images']) - 1}}}")
+                                placeholder = f"{{screenshot_image_{len(current_problem['screenshot_images']) - 1}}}"
+                                text_parts.append(placeholder)
                 current_problem["problem_statement"] += " ".join(text_parts)
 
         elif elem.name == "img" and current_problem:
@@ -108,12 +112,14 @@ def scrape_problems(url):
                 else:
                     if full_img_src not in current_problem["math_images"]:
                         current_problem["math_images"].append(full_img_src)
-                current_problem["problem_statement"] += f"{{math_image_{len(current_problem['math_images']) - 1}}}"
+                        placeholder = f"{{math_image_{len(current_problem['math_images']) - 1}}}"
+                        current_problem["problem_statement"] += placeholder
             elif "wiki-images.artofproblemsolving.com" in img_src:  # Screenshot image
                 full_img_src = img_src  # Full URL already present
                 if full_img_src not in current_problem["screenshot_images"]:
                     current_problem["screenshot_images"].append(full_img_src)
-                current_problem["problem_statement"] += f"{{screenshot_image_{len(current_problem['screenshot_images']) - 1}}}"
+                    placeholder = f"{{screenshot_image_{len(current_problem['screenshot_images']) - 1}}}"
+                    current_problem["problem_statement"] += placeholder
 
         elif elem.name == "a" and current_problem:  # Ensure screenshots in links are captured
             img_tag = elem.find("img")
@@ -123,7 +129,8 @@ def scrape_problems(url):
                     full_img_src = img_src  # Full URL already present
                     if full_img_src not in current_problem["screenshot_images"]:
                         current_problem["screenshot_images"].append(full_img_src)
-                    current_problem["problem_statement"] += f"{{screenshot_image_{len(current_problem['screenshot_images']) - 1}}}"
+                        placeholder = f"{{screenshot_image_{len(current_problem['screenshot_images']) - 1}}}"
+                        current_problem["problem_statement"] += placeholder
 
     if current_problem:
         # Only append valid problems

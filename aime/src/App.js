@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const App = () => {
+function App() {
     const [problem, setProblem] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        fetchProblem();
+    }, []);
 
     const fetchProblem = () => {
         setLoading(true);
         setError(null);
 
-        axios.get("http://localhost:5001/random_problem")
+        axios.get("http://localhost:5001/")
             .then(response => {
-                console.log("Received problem:", response.data);
+                console.log("Received problem:", response.data); // Debug JSON response
                 setProblem(response.data);
                 setLoading(false);
             })
@@ -23,71 +27,45 @@ const App = () => {
             });
     };
 
-    useEffect(() => {
-        fetchProblem();  // Fetch the first problem on page load
-    }, []);
-
-    const renderProblemStatement = (statement, images) => {
-        if (!statement) return null;
-
-        return statement.split(/(\{math_\d+\})/g).map((part, index) => {
-            const match = part.match(/\{math_(\d+)\}/);
-            if (match) {
-                const imgIndex = parseInt(match[1], 10);
-                return images[imgIndex] ? (
-                    <img 
-                        key={index} 
-                        src={images[imgIndex]} 
-                        alt={`Math expression ${imgIndex}`} 
-                        style={{ verticalAlign: "middle", height: "18px", margin: "0 5px" }} 
-                    />
-                ) : part;
-            }
-            return <span key={index}>{part} </span>;
-        });
-    };
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+    if (!problem) return <p>No problem data found.</p>;
 
     return (
-        <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-            <h1>2024 AMC 10A Problems</h1>
+        <div>
+            <h1>{problem.title}</h1>
+            <p dangerouslySetInnerHTML={{ __html: renderProblemStatement(problem.problem_statement, problem.math_images || [], problem.screenshot_images || []) }}></p>
 
-            {loading && <p>Loading problem...</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
-
-            {problem && (
-                <div style={{ marginBottom: "20px", padding: "15px", border: "1px solid #ddd", borderRadius: "5px" }}>
-                    <h3>{problem.title}</h3>
-                    <p>{renderProblemStatement(problem.problem_statement, problem.math_images)}</p>
-
-                    {/* 🔥 NEW: Display Answer Choices Image */}
-                    {problem.answer_choices && (
-                        <div style={{ marginTop: "10px" }}>
-                            <b>Answer Choices:</b>
-                            <img 
-                                src={problem.answer_choices} 
-                                alt="Answer Choices" 
-                                style={{ display: "block", marginTop: "10px", maxWidth: "100%" }} 
-                            />
-                        </div>
-                    )}
-
-                    {/* Render Screenshot Images */}
-                    {problem.screenshot_images.length > 0 && (
-                        <div style={{ marginTop: "15px" }}>
-                            <b>Problem Diagram:</b>
-                            {problem.screenshot_images.map((src, index) => (
-                                <img key={index} src={src} alt="Problem Diagram" style={{ width: "100%", maxWidth: "600px", marginTop: "10px" }} />
-                            ))}
-                        </div>
-                    )}
-
-                    <button onClick={fetchProblem} style={{ padding: "10px", marginTop: "10px", cursor: "pointer" }}>
-                        Next Problem
-                    </button>
-                </div>
-            )}
+            <h2>Answer Choices</h2>
+            {problem.answer_choices && problem.answer_choices.map((choice, index) => (
+                <img key={index} src={choice} alt={`Answer Choice ${index}`} style={{ maxWidth: "80%", height: "auto" }} />
+            ))}
         </div>
     );
+}
+
+const renderProblemStatement = (statement, mathImages, screenshotImages) => {
+    if (!statement) return "";
+
+    // Replace math image placeholders with actual image tags
+    for (let i = 0; i < (mathImages || []).length; i++) {
+        let placeholder = `{math_image_${i}}`;
+        let imgTag = `<img src="${mathImages[i]}" class="math-image" alt="math">`;
+        statement = statement.replace(new RegExp(placeholder, 'g'), imgTag); // Use regex with 'g' flag for global replacement
+    }
+
+    // Replace screenshot image placeholders with actual image tags
+    for (let i = 0; i < (screenshotImages || []).length; i++) {
+        let placeholder = `{screenshot_image_${i}}`;
+        let imgTag = `<img src="${screenshotImages[i]}" class="screenshot-image" alt="screenshot">`;
+        statement = statement.replace(new RegExp(placeholder, 'g'), imgTag); // Use regex with 'g' flag for global replacement
+    }
+
+    // Remove any remaining {math_image_x} or {screenshot_image_x} placeholders
+    statement = statement.replace(/{math_image_\d+}/g, ''); // Remove remaining math placeholders
+    statement = statement.replace(/{screenshot_image_\d+}/g, ''); // Remove remaining screenshot placeholders
+
+    return statement;
 };
 
 export default App;
