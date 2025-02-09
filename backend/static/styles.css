@@ -1,11 +1,11 @@
 .math-image {
-    max-width: 80%;  /* Adjust width */
+    max-width: 30%;  /* Reduced width so that images are smaller */
     height: auto;      /* Maintain aspect ratio */
     vertical-align: middle;  /* Align with text */
 }
 
 .screenshot-image {
-    max-width: 100%;  /* Adjust width */
+    max-width: 100%;  /* Adjust as needed */
     height: auto;       /* Maintain aspect ratio */
     display: block;
     margin: 10px 0;     /* Add spacing */

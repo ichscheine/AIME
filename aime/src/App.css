@@ -1,7 +1,174 @@
-/* App.css */
-.math-image, .screenshot-image {
-  max-width: 100%; /* Ensure images don't exceed their container width */
-  height: auto; /* Maintain aspect ratio */
-  display: block; /* Ensure images don't have extra space below */
-  margin: 10px 0; /* Add some spacing around images */
+/* Global styles */
+body {
+  background-color: #f5f5f5;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* App container */
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header styling */
+.app-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.app-header h1 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin: 0;
+}
+
+/* Problem card styling */
+.problem-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 30px;
+}
+
+/* Problem statement styling */
+.problem-statement {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Math image styling */
+.math-image {
+  max-width: 40%;   /* Reduced from 60% to 40% */
+  height: auto;
+  display: inline-block;  
+  margin: 0 5px;
+  vertical-align: middle;
+}
+
+/* Screenshot container styling */
+.screenshot-container {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Screenshot image styling */
+.screenshot-image {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px 0;
+}
+
+/* Answer choices styling */
+.answer-choices {
+  margin-bottom: 20px;
+}
+
+.answer-choices h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.answer-img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* Answer input styling */
+.answer-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.answer-input input {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.answer-input button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #3498db;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.answer-input button:hover {
+  background-color: #2980b9;
+}
+
+/* Result message styling */
+.result {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.result.correct {
+  color: green;
+}
+
+.result.incorrect {
+  color: red;
+}
+
+/* Interactive result image styling */
+.result-image-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.result-image {
+  max-width: 200px;
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+/* Optional: Add a simple hover animation */
+.result-image:hover {
+  transform: scale(1.1);
+}
+
+/* Next button styling */
+.next-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  background-color: #2ecc71;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.next-btn:hover {
+  background-color: #27ae60;
+}
+
+/* Info and error messages */
+.info-message, .error-message {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: red;
 }

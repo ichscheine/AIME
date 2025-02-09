@@ -1,120 +1,147 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './App.css';
+
+// Import sound files
+import correctSoundFile from './sounds/correct.mp3';
+import incorrectSoundFile from './sounds/incorrect.mp3';
+
+// Import interactive images
+import correctImage from './images/correct.gif';
+import incorrectImage from './images/incorrect.gif';
+
 
 function App() {
-    const [problem, setProblem] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [userAnswer, setUserAnswer] = useState(''); // State for user's answer
-    const [isCorrect, setIsCorrect] = useState(null); // State to track if the answer is correct
+  const [problem, setProblem] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [userAnswer, setUserAnswer] = useState('');
+  const [isCorrect, setIsCorrect] = useState(null);
 
-    useEffect(() => {
-        fetchProblem();
-    }, []);
+  // This state controls which interactive image (if any) is displayed.
+  const [resultImage, setResultImage] = useState(null);
 
-    const fetchProblem = () => {
-        setLoading(true);
-        setError(null);
+  useEffect(() => {
+    fetchProblem();
+  }, []);
 
-        axios.get("http://localhost:5001/")
-            .then(response => {
-                console.log("Received problem:", response.data); // Debug JSON response
-                setProblem(response.data);
-                setLoading(false);
-                // Reset user answer and correctness for a new problem
-                setUserAnswer('');
-                setIsCorrect(null);
-            })
-            .catch(error => {
-                console.error("Error fetching problem:", error);
-                setError("Failed to load problem.");
-                setLoading(false);
-            });
-    };
+  const fetchProblem = () => {
+    setLoading(true);
+    setError(null);
+    // Reset answer state and result image when fetching a new problem.
+    setUserAnswer('');
+    setIsCorrect(null);
+    setResultImage(null);
 
-    const handleSubmitAnswer = () => {
-        if (problem && problem.answer_key) {
-            // Compare user input to the answer key from the backend.
-            // Converting both to lowercase and trimming whitespace makes the check more robust.
-            const correctAnswer = problem.answer_key.trim().toLowerCase();
-            const givenAnswer = userAnswer.trim().toLowerCase();
-            setIsCorrect(givenAnswer === correctAnswer);
-        } else {
-            setIsCorrect(false); // If no answer key is available, mark as incorrect
-        }
-    };
+    axios.get("http://localhost:5001/")
+      .then(response => {
+        console.log("Received problem:", response.data);
+        setProblem(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error("Error fetching problem:", error);
+        setError("Failed to load problem.");
+        setLoading(false);
+      });
+  };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
-    if (!problem) return <p>No problem data found.</p>;
+  const handleSubmitAnswer = () => {
+    if (problem && problem.answer_key) {
+      const correct = userAnswer.trim().toLowerCase() === problem.answer_key.trim().toLowerCase();
+      setIsCorrect(correct);
+      
+      // Play sound effects based on correctness.
+      const audio = new Audio(correct ? correctSoundFile : incorrectSoundFile);
+      audio.play();
+      
+      // Set the interactive image.
+      setResultImage(correct ? correctImage : incorrectImage);
+    } else {
+      setIsCorrect(false);
+      // Play incorrect sound if no answer key is available.
+      new Audio(incorrectSoundFile).play();
+      setResultImage(incorrectImage);
+    }
+  };
 
-    return (
-        <div>
-            <h1>{problem.title}</h1>
-            <p dangerouslySetInnerHTML={{ __html: renderProblemStatement(problem.problem_statement, problem.math_images || [], problem.screenshot_images || []) }}></p>
-
-            <h2>Answer Choices</h2>
-            {problem.answer_choices && problem.answer_choices.map((choice, index) => (
-                <img key={index} src={choice} alt={`Answer Choice ${index}`} style={{ maxWidth: "80%", height: "auto" }} />
-            ))}
-
-            {/* Answer Input Box */}
-            <div style={{ margin: "20px 0" }}>
-                <input
-                    type="text"
-                    value={userAnswer}
-                    onChange={(e) => setUserAnswer(e.target.value)}
-                    placeholder="Enter your answer"
-                    style={{ padding: "10px", fontSize: "16px", width: "200px" }}
-                />
-                <button
-                    onClick={handleSubmitAnswer}
-                    style={{ padding: "10px 20px", fontSize: "16px", marginLeft: "10px" }}
-                >
-                    Submit
-                </button>
-            </div>
-
-            {/* Display Correct/Incorrect Message */}
-            {isCorrect !== null && (
-                <p style={{ color: isCorrect ? "green" : "red", fontWeight: "bold" }}>
-                    {isCorrect ? "Correct! 🎉" : "Incorrect. Try again! ❌"}
-                </p>
+  return (
+    <div className="app-container">
+      <header className="app-header">
+        <h1>AMC 10 Practice</h1>
+      </header>
+      <div className="problem-card">
+        {loading && <p className="info-message">Loading...</p>}
+        {error && <p className="error-message">{error}</p>}
+        {problem && (
+          <>
+            {/* Render the problem statement with math images inline */}
+            <div 
+              className="problem-statement" 
+              dangerouslySetInnerHTML={{ __html: renderProblemStatement(problem.problem_statement, problem.math_images) }} 
+            />
+            {/* Render screenshot images below the statement */}
+            {problem.screenshot_images && problem.screenshot_images.length > 0 && (
+              <div className="screenshot-container">
+                {problem.screenshot_images.map((src, idx) => (
+                  <img key={idx} src={src} alt={`Screenshot ${idx}`} className="screenshot-image" />
+                ))}
+              </div>
             )}
-
-            {/* Next Button */}
-            <button
-                onClick={fetchProblem}
-                style={{ padding: "10px 20px", fontSize: "16px", marginTop: "20px" }}
-            >
-                Next Problem
-            </button>
-        </div>
-    );
+            <div className="answer-choices">
+              <h2>Answer Choices</h2>
+              {problem.answer_choices && problem.answer_choices.map((choice, index) => (
+                <img key={index} src={choice} alt={`Answer Choice ${index}`} className="answer-img" />
+              ))}
+            </div>
+            <div className="answer-input">
+              <input
+                type="text"
+                value={userAnswer}
+                onChange={(e) => setUserAnswer(e.target.value)}
+                placeholder="Enter your answer"
+              />
+              <button onClick={handleSubmitAnswer}>Submit</button>
+            </div>
+            {isCorrect !== null && (
+              <>
+                <p className={`result ${isCorrect ? 'correct' : 'incorrect'}`}>
+                  {isCorrect ? "Correct! 🎉" : "Incorrect. Try again! ❌"}
+                </p>
+                {/* Display interactive result image */}
+                {resultImage && (
+                  <div className="result-image-container">
+                    <img src={resultImage} alt={isCorrect ? "Correct" : "Incorrect"} className="result-image" />
+                  </div>
+                )}
+              </>
+            )}
+            <button onClick={fetchProblem} className="next-btn">Next Problem</button>
+          </>
+        )}
+      </div>
+    </div>
+  );
 }
 
-const renderProblemStatement = (statement, mathImages, screenshotImages) => {
-    if (!statement) return "";
-
-    // Replace math image placeholders with actual image tags
-    for (let i = 0; i < (mathImages || []).length; i++) {
-        let placeholder = `{math_image_${i}}`;
-        let imgTag = `<img src="${mathImages[i]}" class="math-image" alt="math">`;
-        statement = statement.replace(new RegExp(placeholder, 'g'), imgTag);
-    }
-
-    // Replace screenshot image placeholders with actual image tags
-    for (let i = 0; i < (screenshotImages || []).length; i++) {
-        let placeholder = `{screenshot_image_${i}}`;
-        let imgTag = `<img src="${screenshotImages[i]}" class="screenshot-image" alt="screenshot">`;
-        statement = statement.replace(new RegExp(placeholder, 'g'), imgTag);
-    }
-
-    // Remove any remaining placeholders
-    statement = statement.replace(/{math_image_\d+}/g, '');
-    statement = statement.replace(/{screenshot_image_\d+}/g, '');
-
-    return statement;
+/**
+ * Renders the problem statement.
+ * Replaces math image placeholders with inline math images and removes screenshot placeholders.
+ */
+const renderProblemStatement = (statement, mathImages = []) => {
+  if (!statement) return "";
+  
+  // Replace math image placeholders with inline image tags.
+  for (let i = 0; i < mathImages.length; i++) {
+    const placeholder = `{math_image_${i}}`;
+    const imgTag = `<img src="${mathImages[i]}" alt="math" class="math-image" />`;
+    statement = statement.replace(new RegExp(placeholder, 'g'), imgTag);
+  }
+  
+  // Remove any screenshot image placeholders.
+  statement = statement.replace(/{screenshot_image_\d+}/g, '');
+  
+  return statement;
 };
 
 export default App;

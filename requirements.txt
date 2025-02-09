@@ -38,3 +38,4 @@ python-dotenv==1.0.0  # Environment variables (e.g., DB credentials)
 matplotlib==3.8.2
 seaborn==0.13.0
 pymongo==4.11
+APScheduler==3.11.0
