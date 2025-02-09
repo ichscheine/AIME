@@ -26,7 +26,9 @@ def scrape_problems(url):
     for elem in content_div.find_all(["h2", "p", "figure", "table", "a"]):
         if elem.name == "h2":
             if current_problem:
-                problems.append(current_problem)  # Save previous problem
+                # Only append valid problems
+                if current_problem["problem_statement"] or current_problem["math_images"] or current_problem["screenshot_images"] or current_problem["answer_choices"]:
+                    problems.append(current_problem)  # Save previous problem
             problem_title = elem.get_text(strip=True)
             current_problem = {
                 "title": problem_title,
@@ -75,7 +77,9 @@ def scrape_problems(url):
                     current_problem["screenshot_images"].append(full_img_src)
 
     if current_problem:
-        problems.append(current_problem)
+        # Only append valid problems
+        if current_problem["problem_statement"] or current_problem["math_images"] or current_problem["screenshot_images"] or current_problem["answer_choices"]:
+            problems.append(current_problem)
 
     # Debugging Output - Check captured images
     for problem in problems[:5]:
