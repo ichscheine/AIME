@@ -21,6 +21,9 @@ function App() {
                 console.log("Received problem:", response.data); // Debug JSON response
                 setProblem(response.data);
                 setLoading(false);
+                // Reset user answer and correctness for a new problem
+                setUserAnswer('');
+                setIsCorrect(null);
             })
             .catch(error => {
                 console.error("Error fetching problem:", error);
@@ -30,10 +33,14 @@ function App() {
     };
 
     const handleSubmitAnswer = () => {
-        if (problem && problem.correct_answer) {
-            setIsCorrect(userAnswer.trim() === problem.correct_answer.trim());
+        if (problem && problem.answer_key) {
+            // Compare user input to the answer key from the backend.
+            // Converting both to lowercase and trimming whitespace makes the check more robust.
+            const correctAnswer = problem.answer_key.trim().toLowerCase();
+            const givenAnswer = userAnswer.trim().toLowerCase();
+            setIsCorrect(givenAnswer === correctAnswer);
         } else {
-            setIsCorrect(false); // If no correct answer is available, mark as incorrect
+            setIsCorrect(false); // If no answer key is available, mark as incorrect
         }
     };
 
@@ -93,19 +100,19 @@ const renderProblemStatement = (statement, mathImages, screenshotImages) => {
     for (let i = 0; i < (mathImages || []).length; i++) {
         let placeholder = `{math_image_${i}}`;
         let imgTag = `<img src="${mathImages[i]}" class="math-image" alt="math">`;
-        statement = statement.replace(new RegExp(placeholder, 'g'), imgTag); // Use regex with 'g' flag for global replacement
+        statement = statement.replace(new RegExp(placeholder, 'g'), imgTag);
     }
 
     // Replace screenshot image placeholders with actual image tags
     for (let i = 0; i < (screenshotImages || []).length; i++) {
         let placeholder = `{screenshot_image_${i}}`;
         let imgTag = `<img src="${screenshotImages[i]}" class="screenshot-image" alt="screenshot">`;
-        statement = statement.replace(new RegExp(placeholder, 'g'), imgTag); // Use regex with 'g' flag for global replacement
+        statement = statement.replace(new RegExp(placeholder, 'g'), imgTag);
     }
 
-    // Remove any remaining {math_image_x} or {screenshot_image_x} placeholders
-    statement = statement.replace(/{math_image_\d+}/g, ''); // Remove remaining math placeholders
-    statement = statement.replace(/{screenshot_image_\d+}/g, ''); // Remove remaining screenshot placeholders
+    // Remove any remaining placeholders
+    statement = statement.replace(/{math_image_\d+}/g, '');
+    statement = statement.replace(/{screenshot_image_\d+}/g, '');
 
     return statement;
 };
