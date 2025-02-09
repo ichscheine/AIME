@@ -5,6 +5,8 @@ function App() {
     const [problem, setProblem] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [userAnswer, setUserAnswer] = useState(''); // State for user's answer
+    const [isCorrect, setIsCorrect] = useState(null); // State to track if the answer is correct
 
     useEffect(() => {
         fetchProblem();
@@ -27,6 +29,14 @@ function App() {
             });
     };
 
+    const handleSubmitAnswer = () => {
+        if (problem && problem.correct_answer) {
+            setIsCorrect(userAnswer.trim() === problem.correct_answer.trim());
+        } else {
+            setIsCorrect(false); // If no correct answer is available, mark as incorrect
+        }
+    };
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
     if (!problem) return <p>No problem data found.</p>;
@@ -40,6 +50,38 @@ function App() {
             {problem.answer_choices && problem.answer_choices.map((choice, index) => (
                 <img key={index} src={choice} alt={`Answer Choice ${index}`} style={{ maxWidth: "80%", height: "auto" }} />
             ))}
+
+            {/* Answer Input Box */}
+            <div style={{ margin: "20px 0" }}>
+                <input
+                    type="text"
+                    value={userAnswer}
+                    onChange={(e) => setUserAnswer(e.target.value)}
+                    placeholder="Enter your answer"
+                    style={{ padding: "10px", fontSize: "16px", width: "200px" }}
+                />
+                <button
+                    onClick={handleSubmitAnswer}
+                    style={{ padding: "10px 20px", fontSize: "16px", marginLeft: "10px" }}
+                >
+                    Submit
+                </button>
+            </div>
+
+            {/* Display Correct/Incorrect Message */}
+            {isCorrect !== null && (
+                <p style={{ color: isCorrect ? "green" : "red", fontWeight: "bold" }}>
+                    {isCorrect ? "Correct! 🎉" : "Incorrect. Try again! ❌"}
+                </p>
+            )}
+
+            {/* Next Button */}
+            <button
+                onClick={fetchProblem}
+                style={{ padding: "10px 20px", fontSize: "16px", marginTop: "20px" }}
+            >
+                Next Problem
+            </button>
         </div>
     );
 }

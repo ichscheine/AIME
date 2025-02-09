@@ -3,7 +3,9 @@ from bs4 import BeautifulSoup
 from pymongo import MongoClient
 import random
 
+# URLs for problems and answer key pages
 URL = "https://artofproblemsolving.com/wiki/index.php/2024_AMC_10A_Problems"
+ANSWER_KEY_URL = "https://artofproblemsolving.com/wiki/index.php/2024_AMC_10A_Answer_Key"
 LATEX_BASE_URL = "https:"  # Ensure LaTeX images are absolute URLs
 WIKI_IMAGE_BASE_URL = "https:"  # Ensure Screenshot images are absolute URLs
 
@@ -11,7 +13,8 @@ WIKI_IMAGE_BASE_URL = "https:"  # Ensure Screenshot images are absolute URLs
 try:
     client = MongoClient("mongodb://localhost:27017")
     db = client['amc10']  # Name of the database
-    problems_collection = db['problems']  # Name of the collection
+    problems_collection = db['problems']         # Collection for problems
+    answer_keys_collection = db['answer_keys']     # Collection for answer keys
     print("Successfully connected to MongoDB.")
 except Exception as e:
     print(f"Error connecting to MongoDB: {e}")
@@ -37,7 +40,8 @@ def scrape_problems(url):
         if elem.name == "h2":
             if current_problem:
                 # Only append valid problems
-                if current_problem["problem_statement"] or current_problem["math_images"] or current_problem["screenshot_images"] or current_problem["answer_choices"]:
+                if (current_problem["problem_statement"] or current_problem["math_images"] or
+                        current_problem["screenshot_images"] or current_problem["answer_choices"]):
                     problems.append(current_problem)  # Save previous problem
             problem_title = elem.get_text(strip=True)
             current_problem = {
@@ -134,10 +138,11 @@ def scrape_problems(url):
 
     if current_problem:
         # Only append valid problems
-        if current_problem["problem_statement"] or current_problem["math_images"] or current_problem["screenshot_images"] or current_problem["answer_choices"]:
+        if (current_problem["problem_statement"] or current_problem["math_images"] or
+                current_problem["screenshot_images"] or current_problem["answer_choices"]):
             problems.append(current_problem)
 
-    # Debugging Output - Check captured images
+    # Debugging Output - Check captured images for the first 5 problems
     for problem in problems[:5]:
         print("==== Debugging Scraper Output ====")
         print(f"Title: {problem['title']}")
@@ -148,6 +153,43 @@ def scrape_problems(url):
         print("===============================\n")
 
     return problems
+
+def scrape_answer_keys(url):
+    """Scrape answer keys from AoPS."""
+    response = requests.get(url)
+    if response.status_code != 200:
+        print(f"Error: Failed to fetch {url}")
+        return None
+
+    soup = BeautifulSoup(response.text, "lxml")
+    content_div = soup.find("div", {"class": "mw-parser-output"})
+    if not content_div:
+        print("Error: Could not find the main content div")
+        return None
+
+    answer_keys = {}
+
+    # Try to locate an ordered list (<ol>) containing the answers.
+    ol = content_div.find("ol")
+    if ol:
+        lis = ol.find_all("li")
+        for idx, li in enumerate(lis, start=1):
+            text = li.get_text(strip=True)
+            answer_keys[f"Problem {idx}"] = text
+            print(f"Found answer for Problem {idx}: {text}")
+    else:
+        # Fallback: look for <li> elements that start with a number followed by a period.
+        problem_number = 1
+        for elem in content_div.find_all("li"):
+            text = elem.get_text(strip=True)
+            if text.startswith(f"{problem_number}."):
+                answer = text.split(".", 1)[-1].strip()
+                answer_keys[f"Problem {problem_number}"] = answer
+                print(f"Found answer for Problem {problem_number}: {answer}")
+                problem_number += 1
+
+    print("Scraped answer keys:", answer_keys)
+    return answer_keys
 
 def save_problems_to_mongodb(problems):
     """Save problems to MongoDB."""
@@ -161,7 +203,6 @@ def save_problems_to_mongodb(problems):
                 "screenshot_images": problem.get("screenshot_images", []),
                 "answer_choices": problem.get("answer_choices", [])
             }
-
             # Insert the problem document into the database
             problems_collection.insert_one(problem_document)
 
@@ -169,9 +210,29 @@ def save_problems_to_mongodb(problems):
     except Exception as e:
         print(f"Error saving problems to MongoDB: {e}")
 
+def save_answer_keys_to_mongodb(answer_keys):
+    """Save answer keys to MongoDB."""
+    try:
+        # Insert a single document containing all answer keys
+        answer_keys_document = {
+            "title": "2024 AMC 10A Answer Key",
+            "answers": answer_keys
+        }
+        answer_keys_collection.insert_one(answer_keys_document)
+        print("Inserted answer keys into the database.")
+    except Exception as e:
+        print(f"Error saving answer keys to MongoDB: {e}")
+
 if __name__ == "__main__":
+    # Scrape and save problems
     problems = scrape_problems(URL)
     if problems:
         random.shuffle(problems)  # Shuffle before saving
         save_problems_to_mongodb(problems)  # Save problems to MongoDB
         print(f"Scraped {len(problems)} problems successfully.")
+
+    # Scrape and save answer keys
+    answer_keys = scrape_answer_keys(ANSWER_KEY_URL)
+    if answer_keys:
+        save_answer_keys_to_mongodb(answer_keys)
+        print("Scraped answer keys successfully.")
