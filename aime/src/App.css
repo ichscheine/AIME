@@ -109,6 +109,7 @@ body {
 
 .answer-input button:hover {
   background-color: #2980b9;
+  transform: scale(1.03);
 }
 
 /* Result message styling */
@@ -145,21 +146,22 @@ body {
   transform: scale(1.1);
 }
 
-/* Next button styling */
-.next-btn {
-  display: block;
-  width: 100%;
+/* Button group container for "Show Solution" and "Next Problem" buttons */
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Common button styling for the group */
+.button-group button {
+  flex: 1;
   padding: 12px;
   font-size: 1rem;
-  background-color: #2ecc71;
-  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-}
-
-.next-btn:hover {
-  background-color: #27ae60;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 /* Info and error messages */
@@ -171,4 +173,44 @@ body {
 
 .error-message {
   color: red;
+}
+
+/* Container for post-submission actions */
+.post-submit-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Submit button (blue) styling is already defined with the answer-input container. */
+/* Show Solution button styling (orange) */
+.solution-btn {
+  background-color: #f39c12; /* Orange */
+  color: #fff;
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.solution-btn:hover {
+  background-color: #d35400;
+  transform: scale(1.03);
+}
+
+/* Next Problem button styling (green) */
+.next-btn {
+  background-color: #2ecc71; /* Green */
+  color: #fff;
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.next-btn:hover {
+  background-color: #27ae60;
+  transform: scale(1.03);
 }
