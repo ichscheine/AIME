@@ -90,25 +90,61 @@ body {
 }
 
 .answer-input input {
-  flex: 1;
-  padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  flex: 1;
+  padding: 12px;
+  border: none;
   border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
+/* Show Submit button styling (Blue) */
 .answer-input button {
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #3498db;
-  border: none;
+  background-color: #3498db; /* Blue */
   color: #fff;
+  font-size: 1rem;
+  flex: 1;
+  padding: 12px;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .answer-input button:hover {
-  background-color: #2980b9;
+  background-color: #2980b9; /* Blue */
+  transform: scale(1.03);
+}
+
+/* Show Solution button styling (Orange) */
+.solution-btn {
+  background-color: #f39c12; /* Orange */
+  color: #fff;
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.solution-btn:hover {
+  background-color: #d35400;
+  transform: scale(1.03);
+}
+
+/* Next Problem button styling (green) */
+.next-btn {
+  background-color: #2ecc71; /* Green */
+  color: #fff;
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.next-btn:hover {
+  background-color: #27ae60;
   transform: scale(1.03);
 }
 
@@ -180,37 +216,4 @@ body {
   display: flex;
   gap: 10px;
   margin-top: 20px;
-}
-
-/* Submit button (blue) styling is already defined with the answer-input container. */
-/* Show Solution button styling (orange) */
-.solution-btn {
-  background-color: #f39c12; /* Orange */
-  color: #fff;
-  flex: 1;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-.solution-btn:hover {
-  background-color: #d35400;
-  transform: scale(1.03);
-}
-
-/* Next Problem button styling (green) */
-.next-btn {
-  background-color: #2ecc71; /* Green */
-  color: #fff;
-  flex: 1;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-.next-btn:hover {
-  background-color: #27ae60;
-  transform: scale(1.03);
 }
