@@ -18,6 +18,7 @@ function App() {
   const [isCorrect, setIsCorrect] = useState(null);
   const [resultImage, setResultImage] = useState(null);
   const [adaptiveFeedback, setAdaptiveFeedback] = useState(null);
+  const [solutionLoading, setSolutionLoading] = useState(false); // Track solution loading state
 
   useEffect(() => {
     fetchProblem();
@@ -31,6 +32,7 @@ function App() {
     setIsCorrect(null);
     setResultImage(null);
     setAdaptiveFeedback(null);
+    setSolutionLoading(false);
 
     axios.get("http://127.0.0.1:5001/")
       .then(response => {
@@ -54,7 +56,7 @@ function App() {
       audio.play();
       // Set interactive image.
       setResultImage(correct ? correctImage : incorrectImage);
-      // If incorrect, get adaptive feedback.
+      // If the answer is incorrect, get adaptive feedback.
       if (!correct) {
         axios.post("http://127.0.0.1:5001/adaptive_explain", {
           problem_text: problem.problem_statement,
@@ -78,20 +80,40 @@ function App() {
     }
   };
 
-  // New function: When "Show Solution" is clicked, fetch the explanation.
+  // When "Show Solution" is clicked, clear distracting elements immediately and then fetch the solution.
   const handleShowSolution = () => {
     if (problem && problem.answer_key) {
+      console.log("Show Solution clicked");
+      setSolutionLoading(true);
+      // Immediately clear the result message and image.
+      setIsCorrect(null);
+      setResultImage(null);
+      const startTime = Date.now();
+      // Send a dummy value for student_answer ("N/A") so that the backend validation passes.
       axios.post("http://127.0.0.1:5001/adaptive_explain", {
         problem_text: problem.problem_statement,
-        student_answer: "", // We don't need a student answer here.
+        student_answer: "N/A", // Dummy value for solution display.
         correct_answer: problem.answer_key,
         show_solution: true
       })
         .then(response => {
-          setAdaptiveFeedback(response.data);
+          const elapsed = Date.now() - startTime;
+          const minDelay = 1500; // Minimum delay in milliseconds (1.5 seconds)
+          const remaining = minDelay - elapsed;
+          console.log("API returned. Elapsed:", elapsed, "Remaining:", remaining);
+          if (remaining > 0) {
+            setTimeout(() => {
+              setAdaptiveFeedback(response.data);
+              setSolutionLoading(false);
+            }, remaining);
+          } else {
+            setAdaptiveFeedback(response.data);
+            setSolutionLoading(false);
+          }
         })
         .catch(error => {
           console.error("Error showing solution:", error);
+          setSolutionLoading(false);
         });
     }
   };
@@ -126,7 +148,7 @@ function App() {
                 <img key={index} src={choice} alt={`Answer Choice ${index}`} className="answer-img" />
               ))}
             </div>
-            {/* Answer Input */}
+            {/* Answer Input and Submit Button */}
             <div className="answer-input">
               <input
                 type="text"
@@ -134,10 +156,10 @@ function App() {
                 onChange={(e) => setUserAnswer(e.target.value)}
                 placeholder="Enter your answer"
               />
-              <button onClick={handleSubmitAnswer}>Submit</button>
+              <button onClick={handleSubmitAnswer} className="submit-btn answer-submit-btn">Submit</button>
             </div>
-            {/* Result Message and Image */}
-            {isCorrect !== null && (
+            {/* Result Message and Image: Render only if no adaptive feedback and not loading */}
+            {(isCorrect !== null && !adaptiveFeedback && !solutionLoading) && (
               <>
                 <p className={`result ${isCorrect ? 'correct' : 'incorrect'}`}>
                   {isCorrect ? "Correct! 🎉" : "Incorrect. Try again! ❌"}
@@ -149,8 +171,11 @@ function App() {
                 )}
               </>
             )}
-            {/* Adaptive Feedback */}
-            {adaptiveFeedback && (
+            {/* Adaptive Feedback or Loading Message */}
+            {solutionLoading && (
+              <p className="info-message">Loading solution...</p>
+            )}
+            {!solutionLoading && adaptiveFeedback && (
               <div className="adaptive-feedback">
                 <h3>Explanation:</h3>
                 <p>{adaptiveFeedback.explanation}</p>
@@ -162,9 +187,11 @@ function App() {
                 )}
               </div>
             )}
-            {/* Button Group */}
+            {/* Button Group for "Show Solution" (if needed) and "Next Problem" */}
             <div className="button-group">
-              <button onClick={handleShowSolution} className="solution-btn">Show Solution</button>
+              {(isCorrect !== null && isCorrect === false) && (
+                <button onClick={handleShowSolution} className="solution-btn">Show Solution</button>
+              )}
               <button onClick={fetchProblem} className="next-btn">Next Problem</button>
             </div>
           </>
