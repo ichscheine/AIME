@@ -17,27 +17,30 @@ function App() {
   const [userAnswer, setUserAnswer] = useState('');
   const [isCorrect, setIsCorrect] = useState(null);
   const [resultImage, setResultImage] = useState(null);
-  const [adaptiveFeedback, setAdaptiveFeedback] = useState(null);
+  const [solutionData, setSolutionData] = useState(null); // Holds adaptive content from adaptive_learning collection
   const [solutionLoading, setSolutionLoading] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
+  const [startTime, setStartTime] = useState(null);
+  const [timeSpent, setTimeSpent] = useState(null);
 
-  // Preload audio objects so they’re reused (avoid re-instantiation on every submit)
+  // Preload audio objects.
   const correctAudio = useMemo(() => new Audio(correctSoundFile), []);
   const incorrectAudio = useMemo(() => new Audio(incorrectSoundFile), []);
 
-  // useRef to hold a cancellation token for axios requests.
+  // useRef for cancellation token.
   const cancelSourceRef = useRef(null);
 
   const fetchProblem = useCallback(async () => {
     setLoading(true);
     setError(null);
-    // Reset state when fetching a new problem.
     setUserAnswer('');
     setIsCorrect(null);
     setResultImage(null);
-    setAdaptiveFeedback(null);
+    setSolutionData(null); // Clear any adaptive content from previous problem.
     setSolutionLoading(false);
+    setLoadingProgress(0);
+    setTimeSpent(null);
 
-    // Cancel any previous request if it exists.
     if (cancelSourceRef.current) {
       cancelSourceRef.current.cancel();
     }
@@ -49,6 +52,7 @@ function App() {
       });
       console.log("Received problem:", response.data);
       setProblem(response.data);
+      setStartTime(Date.now());
     } catch (err) {
       if (!axios.isCancel(err)) {
         console.error("Error fetching problem:", err);
@@ -61,7 +65,6 @@ function App() {
 
   useEffect(() => {
     fetchProblem();
-    // Cleanup: cancel any pending axios request on unmount.
     return () => {
       if (cancelSourceRef.current) {
         cancelSourceRef.current.cancel();
@@ -70,78 +73,56 @@ function App() {
   }, [fetchProblem]);
 
   const handleSubmitAnswer = useCallback(async () => {
+    // Do not update if the adaptive content (solution) is already loaded.
+    if (solutionData) return;
+
     if (problem && problem.answer_key) {
       const correct =
         userAnswer.trim().toLowerCase() === problem.answer_key.trim().toLowerCase();
       setIsCorrect(correct);
-
-      // Play the appropriate sound using our preloaded audio objects.
       correct ? correctAudio.play() : incorrectAudio.play();
-
-      // Set interactive image.
       setResultImage(correct ? correctImage : incorrectImage);
-
-      // If the answer is incorrect, optionally generate adaptive follow-up feedback.
-      if (!correct) {
-        try {
-          const response = await axios.post("http://127.0.0.1:5001/adaptive_explain", {
-            problem_text: problem.problem_statement,
-            student_answer: userAnswer,
-            correct_answer: problem.answer_key
-          });
-          setAdaptiveFeedback(response.data);
-        } catch (err) {
-          console.error("Error fetching adaptive feedback:", err);
-        }
-      } else {
-        setAdaptiveFeedback(null);
+      if (startTime) {
+        const elapsed = Date.now() - startTime;
+        setTimeSpent((elapsed / 1000).toFixed(1));
+        console.log(`Time spent: ${elapsed / 1000} seconds`);
       }
     } else {
       setIsCorrect(false);
       incorrectAudio.play();
       setResultImage(incorrectImage);
     }
-  }, [problem, userAnswer, correctAudio, incorrectAudio]);
+  }, [problem, userAnswer, startTime, correctAudio, incorrectAudio, solutionData]);
 
   const handleShowSolution = useCallback(async () => {
-    if (problem && problem.problem_number) {
+    if (problem && problem.problem_number && problem.year && problem.contest) {
       console.log("Show Solution clicked");
       setSolutionLoading(true);
-      // Optionally clear current result message/image.
+      setLoadingProgress(0);
       setIsCorrect(null);
       setResultImage(null);
+
+      const progressInterval = setInterval(() => {
+        setLoadingProgress(prev => (prev < 90 ? prev + 10 : prev));
+      }, 200);
+
       try {
-        // Make two API calls in parallel:
-        const solutionRequest = axios.get("http://127.0.0.1:5001/solution", {
+        // Fetch adaptive learning data from our new endpoint.
+        const response = await axios.get("http://127.0.0.1:5001/adaptive_learning", {
           params: {
             year: problem.year,
             contest: problem.contest,
-            problem_number: problem.problem_number
+            problem_number: problem.problem_number,
+            difficulty: "medium" // Adjust difficulty as needed.
           }
         });
-        const followupRequest = axios.post("http://127.0.0.1:5001/adaptive_explain", {
-          problem_text: problem.problem_statement,
-          student_answer: "N/A", // dummy value to satisfy backend requirements
-          correct_answer: problem.answer_key,
-          show_solution: true  // flag can be used in backend if needed
-        });
-
-        const [solutionResponse, followupResponse] = await Promise.all([
-          solutionRequest,
-          followupRequest
-        ]);
-
-        // Combine the solution and follow-up question.
-        const combinedData = {
-          solution: solutionResponse.data.solution, // Expected from /solution endpoint.
-          explanation: followupResponse.data.explanation, // Generic message, if any.
-          followup: followupResponse.data.followup,
-          selected_difficulty: followupResponse.data.selected_difficulty
-        };
-        setAdaptiveFeedback(combinedData);
+        clearInterval(progressInterval);
+        setLoadingProgress(100);
+        setSolutionData(response.data);
       } catch (err) {
-        console.error("Error fetching solution and follow-up:", err);
+        console.error("Error fetching adaptive learning data:", err);
       } finally {
+        clearInterval(progressInterval);
         setSolutionLoading(false);
       }
     }
@@ -204,8 +185,10 @@ function App() {
                 Submit
               </button>
             </div>
-            {/* Result Message and Image (only when adaptive feedback is not present and solution isn’t loading) */}
-            {isCorrect !== null && !adaptiveFeedback && !solutionLoading && (
+            {/* Display Time Spent if available */}
+            {timeSpent && <p className="info-message">Time Spent: {timeSpent} seconds</p>}
+            {/* Result Message and Image (if solution is not loaded yet) */}
+            {isCorrect !== null && !solutionData && !solutionLoading && (
               <>
                 <p className={`result ${isCorrect ? 'correct' : 'incorrect'}`}>
                   {isCorrect ? "Correct! 🎉" : "Incorrect. Try again! ❌"}
@@ -222,27 +205,30 @@ function App() {
                 )}
               </>
             )}
-            {/* Adaptive Feedback / Solution and Follow-up Question or Loading Message */}
-            {solutionLoading && <p className="info-message">Loading Solution...</p>}
-            {!solutionLoading && adaptiveFeedback && (
+            {/* Loading Progress for Adaptive Data */}
+            {solutionLoading && (
+              <p className="info-message">Loading Solution: {loadingProgress}%</p>
+            )}
+            {/* Display Adaptive Content if Loaded */}
+            {solutionData && (
               <div className="adaptive-feedback">
-                {adaptiveFeedback.solution && (
+                {solutionData.solution && (
                   <>
                     <h3>Solution:</h3>
-                    <p>{adaptiveFeedback.solution}</p>
+                    <p>{solutionData.solution}</p>
                   </>
                 )}
-                {adaptiveFeedback.followup && (
+                {solutionData.followup && (
                   <>
-                    <h3>Follow-up Question ({adaptiveFeedback.selected_difficulty}):</h3>
-                    <p>{adaptiveFeedback.followup}</p>
+                    <h3>Follow-up Question:</h3>
+                    <p>{solutionData.followup}</p>
                   </>
                 )}
               </div>
             )}
             {/* Button Group */}
             <div className="button-group">
-              {isCorrect !== null && isCorrect === false && (
+              {isCorrect !== null && isCorrect === false && !solutionData && (
                 <button onClick={handleShowSolution} className="solution-btn">
                   Show Solution
                 </button>
@@ -267,13 +253,10 @@ const renderProblemStatement = (statement, mathImages = []) => {
   if (!statement) return "";
   for (let i = 0; i < mathImages.length; i++) {
     const placeholder = `{math_image_${i}}`;
-    // Include the lazy loading attribute in the generated image tag.
     const imgTag = `<img src="${mathImages[i]}" alt="math" class="math-image" loading="lazy" />`;
     statement = statement.replace(new RegExp(placeholder, 'g'), imgTag);
   }
-  // Remove any screenshot placeholders.
-  statement = statement.replace(/{screenshot_image_\d+}/g, '');
-  return statement;
+  return statement.replace(/{screenshot_image_\d+}/g, '');
 };
 
 export default App;

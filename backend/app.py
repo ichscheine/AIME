@@ -1,14 +1,10 @@
 import os
-from flask import Flask, jsonify, abort, request
+from flask import Flask, jsonify, request
 from pymongo import MongoClient
-import random
-import re
-import openai
 from flask_cors import CORS
 
-# Load environment variables (make sure to set OPENAI_API_KEY in your environment or .env file)
-openai.api_key = os.environ.get("OPENAI_API_KEY")
-
+# Load environment variables (make sure OPENAI_API_KEY is set in your environment or .env file)
+# (The adaptive learning generation is handled separately.)
 app = Flask(__name__)
 CORS(app)
 
@@ -17,18 +13,7 @@ client = MongoClient("mongodb://localhost:27017")
 db = client['amc10_test']
 problems_collection = db['problems']
 answer_keys_collection = db['answer_keys']
-solutions_collection = db['solutions']
-
-# Import adaptive learning components from adaptive_learning.py
-from adaptive_learning import (
-    RLAgent,
-    generate_followup_question,
-    explain_and_generate
-)
-
-# Instantiate a global RL agent with difficulty levels
-actions = ["easy", "medium", "hard"]
-agent = RLAgent(actions)
+adaptive_collection = db['adaptive_learning']
 
 ###############################################
 # Endpoint: Return a Random Problem
@@ -41,6 +26,8 @@ def show_problem():
         return jsonify({"error": "No problems found"}), 404
 
     problem['_id'] = str(problem['_id'])
+    
+    # Attach the answer key from the answer_keys_collection (if available)
     answer_keys_doc = answer_keys_collection.find_one({})
     if answer_keys_doc:
         answer_keys_doc['_id'] = str(answer_keys_doc['_id'])
@@ -58,47 +45,44 @@ def show_problem():
     return jsonify(problem)
 
 ###############################################
-# Endpoint: Return Solutions for a Problem
+# Endpoint: Get Adaptive Learning Data
 ###############################################
-@app.route("/solution", methods=["GET"])
-def get_solution():
-    # Extract the required query parameters.
+@app.route("/adaptive_learning", methods=["GET"])
+def get_adaptive_learning():
     year = request.args.get("year")
     contest = request.args.get("contest")
     problem_number = request.args.get("problem_number")
-    
-    if not (year and contest and problem_number):
-        return jsonify({"error": "Missing required query parameters (year, contest, problem_number)."}), 400
+    difficulty = request.args.get("difficulty", "medium")
 
-    # Query the solutions collection for a matching document.
-    solution_doc = solutions_collection.find_one({
+    if not (year and contest and problem_number):
+        return jsonify({"error": "Missing required parameters."}), 400
+
+    query = {
         "year": year,
         "contest": contest,
         "problem_number": problem_number
-    })
+    }
+    adaptive_doc = adaptive_collection.find_one(query)
+    if not adaptive_doc:
+        return jsonify({
+            "error": "Adaptive data not found.",
+            "query": query,
+            "message": "Please ensure that adaptive learning data has been generated for this problem."
+        }), 404
 
-    if solution_doc:
-        # Convert ObjectId to string if needed.
-        solution_doc["_id"] = str(solution_doc["_id"])
-        return jsonify({"solution": solution_doc.get("solution", "Solution not available")})
-    else:
-        return jsonify({"error": "Solution not found"}), 404
+    adaptive_doc["_id"] = str(adaptive_doc["_id"])
+    solution_summaries = adaptive_doc.get("solution_summaries", [])
+    solution_summary = solution_summaries[0] if solution_summaries else "No solution available."
+    followup_questions = adaptive_doc.get("followup_questions", {})
+    followup = followup_questions.get(difficulty, "No follow-up question available.")
 
-###############################################
-# Endpoint: Adaptive Follow-up Question Generation
-###############################################
-@app.route("/adaptive_explain", methods=["POST"])
-def adaptive_explain():
-    data = request.get_json()
-    problem_text = data.get("problem_text")
-    student_answer = data.get("student_answer")
-    correct_answer = data.get("correct_answer")
-    if not problem_text or not student_answer or not correct_answer:
-        return jsonify({"error": "Missing required fields."}), 400
+    response_data = {
+        "solution": solution_summary,
+        "followup": followup,
+        "available_difficulties": list(followup_questions.keys())
+    }
+    return jsonify(response_data)
 
-    # The explain_and_generate function now only returns a generic explanation and a follow-up question.
-    result = explain_and_generate(problem_text, student_answer, correct_answer, agent)
-    return jsonify(result)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
