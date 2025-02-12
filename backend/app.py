@@ -14,14 +14,14 @@ CORS(app)
 
 # Connect to MongoDB
 client = MongoClient("mongodb://localhost:27017")
-db = client['amc10']
+db = client['amc10_test']
 problems_collection = db['problems']
 answer_keys_collection = db['answer_keys']
+solutions_collection = db['solutions']
 
 # Import adaptive learning components from adaptive_learning.py
 from adaptive_learning import (
     RLAgent,
-    generate_explanation,
     generate_followup_question,
     explain_and_generate
 )
@@ -31,7 +31,7 @@ actions = ["easy", "medium", "hard"]
 agent = RLAgent(actions)
 
 ###############################################
-# Existing Endpoint: Return a Random Problem
+# Endpoint: Return a Random Problem
 ###############################################
 @app.route("/")
 def show_problem():
@@ -58,7 +58,34 @@ def show_problem():
     return jsonify(problem)
 
 ###############################################
-# New Endpoint: Adaptive Explanation & Follow-up Generation
+# Endpoint: Return Solutions for a Problem
+###############################################
+@app.route("/solution", methods=["GET"])
+def get_solution():
+    # Extract the required query parameters.
+    year = request.args.get("year")
+    contest = request.args.get("contest")
+    problem_number = request.args.get("problem_number")
+    
+    if not (year and contest and problem_number):
+        return jsonify({"error": "Missing required query parameters (year, contest, problem_number)."}), 400
+
+    # Query the solutions collection for a matching document.
+    solution_doc = solutions_collection.find_one({
+        "year": year,
+        "contest": contest,
+        "problem_number": problem_number
+    })
+
+    if solution_doc:
+        # Convert ObjectId to string if needed.
+        solution_doc["_id"] = str(solution_doc["_id"])
+        return jsonify({"solution": solution_doc.get("solution", "Solution not available")})
+    else:
+        return jsonify({"error": "Solution not found"}), 404
+
+###############################################
+# Endpoint: Adaptive Follow-up Question Generation
 ###############################################
 @app.route("/adaptive_explain", methods=["POST"])
 def adaptive_explain():
@@ -69,6 +96,7 @@ def adaptive_explain():
     if not problem_text or not student_answer or not correct_answer:
         return jsonify({"error": "Missing required fields."}), 400
 
+    # The explain_and_generate function now only returns a generic explanation and a follow-up question.
     result = explain_and_generate(problem_text, student_answer, correct_answer, agent)
     return jsonify(result)
 

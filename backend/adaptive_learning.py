@@ -32,41 +32,11 @@ class RLAgent:
         new_q = current_q + self.alpha * (reward + self.gamma * next_max - current_q)
         self.q_table[(state, action)] = new_q
 
-def generate_explanation(problem_text):
-    """
-    Generate a detailed, step-by-step explanation for the given AMC 10 problem.
-    The explanation should be specific to the problem text, include fully resolved numerical expressions,
-    and avoid raw LaTeX code.
-    """
-    prompt = (
-        "You are an expert AMC 10 math tutor who explains concepts clearly and precisely. "
-        "Please provide a necessary step-by-step explanation for solving the following problem in the most optimal way. "
-        "Make sure that all math expressions are fully resolved (showing evaluated numbers) and avoid using raw LaTeX. "
-        "Focus solely on the details of the problem provided. Limit in 300 words. \n\n"
-        f"Problem:\n{problem_text}\n\n"
-        "Concise Explanation:"
-    )
-    try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "You are an expert AMC 10 math tutor who explains concepts clearly."},
-                {"role": "user", "content": prompt}
-            ],
-            max_tokens=400,
-            temperature=0.7,
-        )
-        explanation = response.choices[0].message.content.strip()
-        return explanation
-    except OpenAIError as e:
-        print(f"OpenAI API Error: {e}")
-        return "An error occurred while generating the explanation."
-
 def generate_followup_question(problem_text, difficulty):
     """
     Generate a follow-up AMC 10 problem similar to the original.
-    The follow-up problem should test the same concept at the specified difficulty,
-    include a user-friendly statement, and provide a diagram (in ASCII or textual format)
+    The follow-up problem tests the same concept at the specified difficulty,
+    includes a user-friendly statement, and provides a diagram (in ASCII or textual format)
     that shows the configuration of the relevant figures.
     """
     prompt = (
@@ -74,29 +44,33 @@ def generate_followup_question(problem_text, difficulty):
         "Based solely on the following problem, generate a similar follow-up problem at "
         f"{difficulty} difficulty. The new problem should test the same concept with a slight variation. "
         "Include a diagram (in ASCII or textual format) that clearly illustrates the configuration of the figures. "
-        "Do not include any generic examples; base your problem solely on the details provided."
-        "Be concise. \n\n"
+        "Do not include any generic examples; base your problem solely on the details provided. "
+        "Be concise.\n\n"
         f"Original Problem:\n{problem_text}\n\n"
         "Follow-up Problem:"
     )
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
-            {"role": "system", "content": "You are an expert AMC 10 math tutor who creates clear, detailed problems with diagrams when needed."},
-            {"role": "user", "content": prompt}
-        ],
-        max_tokens=400,
-        temperature=0.7,
-    )
-    followup_question = response.choices[0].message.content.strip()
-    return followup_question
+    try:
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "You are an expert AMC 10 math tutor who creates clear, detailed problems with diagrams when needed."},
+                {"role": "user", "content": prompt}
+            ],
+            max_tokens=400,
+            temperature=0.7,
+        )
+        followup_question = response.choices[0].message.content.strip()
+        return followup_question
+    except OpenAIError as e:
+        print(f"OpenAI API Error: {e}")
+        return "An error occurred while generating the follow-up question."
 
 def explain_and_generate(problem_text, student_answer, correct_answer, agent, state=None):
     """
     Compare the student's answer to the correct answer.
-    If correct, return a confirmation.
-    If incorrect, generate a detailed, user-friendly explanation specific to the problem,
-    and then generate a follow-up problem (with a diagram) at a difficulty selected by the RL agent.
+    - If the answer is correct, return a confirmation.
+    - If the answer is incorrect, generate a follow-up problem (with a diagram) at a difficulty 
+      selected by the RL agent. A generic message is returned instead of a detailed explanation.
     """
     if student_answer.strip().lower() == correct_answer.strip().lower():
         state = "correct"
@@ -107,11 +81,10 @@ def explain_and_generate(problem_text, student_answer, correct_answer, agent, st
         }
     else:
         state = "incorrect"
-        explanation = generate_explanation(problem_text)
         selected_difficulty = agent.select_action(state)
         followup_question = generate_followup_question(problem_text, selected_difficulty)
         return {
-            "explanation": explanation,
+            "explanation": "Incorrect. Please try the following follow-up question.",
             "followup": followup_question,
             "selected_difficulty": selected_difficulty
         }

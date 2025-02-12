@@ -37,7 +37,7 @@ function App() {
     setAdaptiveFeedback(null);
     setSolutionLoading(false);
 
-    // Cancel any previous request if it exists
+    // Cancel any previous request if it exists.
     if (cancelSourceRef.current) {
       cancelSourceRef.current.cancel();
     }
@@ -81,14 +81,13 @@ function App() {
       // Set interactive image.
       setResultImage(correct ? correctImage : incorrectImage);
 
-      // If the answer is incorrect, request adaptive feedback.
+      // If the answer is incorrect, optionally generate adaptive follow-up feedback.
       if (!correct) {
         try {
           const response = await axios.post("http://127.0.0.1:5001/adaptive_explain", {
             problem_text: problem.problem_statement,
             student_answer: userAnswer,
-            correct_answer: problem.answer_key,
-            show_solution: false
+            correct_answer: problem.answer_key
           });
           setAdaptiveFeedback(response.data);
         } catch (err) {
@@ -105,35 +104,44 @@ function App() {
   }, [problem, userAnswer, correctAudio, incorrectAudio]);
 
   const handleShowSolution = useCallback(async () => {
-    if (problem && problem.answer_key) {
+    if (problem && problem.problem_number) {
       console.log("Show Solution clicked");
       setSolutionLoading(true);
-      // Immediately clear result message and image.
+      // Optionally clear current result message/image.
       setIsCorrect(null);
       setResultImage(null);
-      // Record the start time.
-      const startTime = Date.now();
       try {
-        const response = await axios.post("http://127.0.0.1:5001/adaptive_explain", {
-          problem_text: problem.problem_statement,
-          student_answer: "N/A", // Dummy value to satisfy backend.
-          correct_answer: problem.answer_key,
-          show_solution: true
+        // Make two API calls in parallel:
+        const solutionRequest = axios.get("http://127.0.0.1:5001/solution", {
+          params: {
+            year: problem.year,
+            contest: problem.contest,
+            problem_number: problem.problem_number
+          }
         });
-        const elapsed = Date.now() - startTime;
-        const targetDelay = 500; // Ensure a minimum 500ms delay.
-        const remaining = targetDelay - elapsed;
-        if (remaining > 0) {
-          setTimeout(() => {
-            setAdaptiveFeedback(response.data);
-            setSolutionLoading(false);
-          }, remaining);
-        } else {
-          setAdaptiveFeedback(response.data);
-          setSolutionLoading(false);
-        }
+        const followupRequest = axios.post("http://127.0.0.1:5001/adaptive_explain", {
+          problem_text: problem.problem_statement,
+          student_answer: "N/A", // dummy value to satisfy backend requirements
+          correct_answer: problem.answer_key,
+          show_solution: true  // flag can be used in backend if needed
+        });
+
+        const [solutionResponse, followupResponse] = await Promise.all([
+          solutionRequest,
+          followupRequest
+        ]);
+
+        // Combine the solution and follow-up question.
+        const combinedData = {
+          solution: solutionResponse.data.solution, // Expected from /solution endpoint.
+          explanation: followupResponse.data.explanation, // Generic message, if any.
+          followup: followupResponse.data.followup,
+          selected_difficulty: followupResponse.data.selected_difficulty
+        };
+        setAdaptiveFeedback(combinedData);
       } catch (err) {
-        console.error("Error showing solution:", err);
+        console.error("Error fetching solution and follow-up:", err);
+      } finally {
         setSolutionLoading(false);
       }
     }
@@ -214,17 +222,19 @@ function App() {
                 )}
               </>
             )}
-            {/* Adaptive Feedback or Loading Message */}
+            {/* Adaptive Feedback / Solution and Follow-up Question or Loading Message */}
             {solutionLoading && <p className="info-message">Loading Solution...</p>}
             {!solutionLoading && adaptiveFeedback && (
               <div className="adaptive-feedback">
-                <h3>Explanation:</h3>
-                <p>{adaptiveFeedback.explanation}</p>
+                {adaptiveFeedback.solution && (
+                  <>
+                    <h3>Solution:</h3>
+                    <p>{adaptiveFeedback.solution}</p>
+                  </>
+                )}
                 {adaptiveFeedback.followup && (
                   <>
-                    <h3>
-                      Follow-up Question ({adaptiveFeedback.selected_difficulty}):
-                    </h3>
+                    <h3>Follow-up Question ({adaptiveFeedback.selected_difficulty}):</h3>
                     <p>{adaptiveFeedback.followup}</p>
                   </>
                 )}
