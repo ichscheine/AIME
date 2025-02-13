@@ -12,9 +12,9 @@ LATEX_BASE_URL = "https:"  # Ensure LaTeX images are absolute URLs
 try:
     client = MongoClient("mongodb://localhost:27017")
     db = client['amc10_test']  # Name of the database
-    problems_collection = db['problems']         # Collection for problems
+    problems_collection = db['problems']         # Collection for problems (without raw solutions)
     answer_keys_collection = db['answer_keys']     # Collection for answer keys
-    solutions_collection = db['solutions']         # Collection for solutions
+    solutions_collection = db['solutions']         # Collection for detailed solutions (includes all problem data + solution)
     print("Successfully connected to MongoDB.")
 except Exception as e:
     print(f"Error connecting to MongoDB: {e}")
@@ -45,9 +45,9 @@ def scrape_solution_page(relative_url):
 def scrape_problems(url):
     """
     Scrape problems from the main AoPS page.
-    In addition to capturing LaTeX math, answer choices, screenshots,
-    and metadata, this version looks for a "Solution" link in a <p> element.
-    When found, it fetches the solution page and stores its text in a "solution" field.
+    Captures LaTeX math images, answer choices, screenshots, and metadata.
+    If a "Solution" link is found, fetch the solution page and attach its text
+    to the scraped problem (this will be used later for saving in db['solutions']).
     """
     # Extract metadata from the URL
     metadata = re.search(r'/index\.php/(\d+)_([A-Za-z0-9_]+)_Problems', url)
@@ -76,7 +76,7 @@ def scrape_problems(url):
     # Process elements in document order.
     for elem in content_div.find_all(["h2", "p", "ul", "li", "img", "a"]):
         if elem.name == "h2":
-            # Finalize the previous problem if it exists.
+            # Finalize and append the previous problem if it exists.
             if current_problem:
                 meta_str = f"({current_problem['year']} {current_problem['contest']}, Problem {current_problem['problem_number']})"
                 current_problem["problem_statement"] += "\n" + meta_str
@@ -105,7 +105,7 @@ def scrape_problems(url):
                 "year": year,
                 "contest": contest,
                 "problem_number": problem_number
-                # "solution" field will be added if a solution link is found.
+                # Note: "solution" field will be added temporarily (for use in solutions_collection)
             }
         elif elem.name == "p" and current_problem:
             # Check if this paragraph contains a "Solution" link.
@@ -196,19 +196,20 @@ def scrape_problems(url):
                     placeholder = f"{{screenshot_image_{len(current_problem['screenshot_images']) - 1}}}"
                     current_problem["problem_statement"] += placeholder
         elif elem.name == "a" and current_problem:
-            # In case a solution link appears outside a <p> (fallback)
+            # Fallback: if a solution link appears outside a <p>
             if elem.get_text(strip=True).lower() == "solution":
                 if "solution" not in current_problem:
                     solution_href = elem.get("href")
                     sol_text = scrape_solution_page(solution_href)
                     current_problem["solution"] = sol_text
+
     # Append the final problem.
     if current_problem:
         meta_str = f"({current_problem['year']} {current_problem['contest']}, Problem {current_problem['problem_number']})"
         current_problem["problem_statement"] += "\n" + meta_str
         problems.append(current_problem)
 
-    # Debug output for the first few problems
+    # Debug output for the first few problems.
     for prob in problems[:5]:
         print("==== Debugging Scraper Output ====")
         print(f"Meta: {prob.get('year')} {prob.get('contest')}, Problem Number: {prob.get('problem_number')}")
@@ -253,7 +254,7 @@ def scrape_answer_keys(url):
             text = li.get_text(strip=True)
             answer_keys[f"Problem {idx}"] = text
     else:
-        # Fallback method.
+        # Fallback: look for list items starting with number.
         problem_number = 1
         for elem in content_div.find_all("li"):
             text = elem.get_text(strip=True)
@@ -267,14 +268,15 @@ def scrape_answer_keys(url):
 
 def save_problems_to_mongodb(problems):
     """
-    Save problems to MongoDB after validating that there are exactly 25 problems.
+    Save problems to db['problems'].
+    Only store the problem data (problem_statement, images, answer choices, metadata)
+    without the raw solution.
     """
     if len(problems) != 25:
         print(f"Error: Expected 25 problems, but scraped {len(problems)} problems. Skipping save.")
         return
     try:
         for problem in problems:
-            # Remove the title field before saving.
             problem_document = {
                 "problem_statement": problem.get("problem_statement", ""),
                 "math_images": problem.get("math_images", []),
@@ -291,7 +293,7 @@ def save_problems_to_mongodb(problems):
 
 def save_answer_keys_to_mongodb(answer_keys_data):
     """
-    Save answer keys to MongoDB after validating that there are exactly 25 answer keys.
+    Save answer keys to db['answer_keys'].
     """
     answers = answer_keys_data.get("answers", {})
     if len(answers) != 25:
@@ -311,8 +313,9 @@ def save_answer_keys_to_mongodb(answer_keys_data):
 
 def save_solutions_to_mongodb(solutions):
     """
-    Save scraped solutions to a separate MongoDB collection.
-    Each solution document includes metadata (year, contest, problem_number) and the solution text.
+    Save solutions to db['solutions'].
+    Each solution document includes all fields that were stored in db['problems']
+    plus the 'solution' text.
     """
     if not solutions:
         print("No solutions found to save.")
@@ -326,19 +329,32 @@ def save_solutions_to_mongodb(solutions):
 
 # --- For direct running ---
 if __name__ == "__main__":
-    # Scrape problems (which now may include a solution field)
+    # Scrape problems from the main URL.
     problems = scrape_problems(URL)
     if problems:
-        # Save problems to the problems collection.
+        # Save problems to db['problems'] (without the raw solution).
         for problem in problems:
-            problems_collection.insert_one(problem)
+            problems_collection.insert_one({
+                "problem_statement": problem.get("problem_statement", ""),
+                "math_images": problem.get("math_images", []),
+                "screenshot_images": problem.get("screenshot_images", []),
+                "answer_choices": problem.get("answer_choices", []),
+                "year": problem.get("year", ""),
+                "contest": problem.get("contest", ""),
+                "problem_number": problem.get("problem_number", "")
+            })
         print(f"Scraped {len(problems)} problems successfully.")
 
-        # Extract and save solutions (if available) to the solutions collection.
+        # Extract and save solutions to db['solutions'].
         solutions = []
         for problem in problems:
             if "solution" in problem and problem["solution"].strip():
+                # Include all fields from problems plus the solution text.
                 solution_document = {
+                    "problem_statement": problem.get("problem_statement", ""),
+                    "math_images": problem.get("math_images", []),
+                    "screenshot_images": problem.get("screenshot_images", []),
+                    "answer_choices": problem.get("answer_choices", []),
                     "year": problem.get("year", ""),
                     "contest": problem.get("contest", ""),
                     "problem_number": problem.get("problem_number", ""),
@@ -347,7 +363,7 @@ if __name__ == "__main__":
                 solutions.append(solution_document)
         save_solutions_to_mongodb(solutions)
 
-    # Scrape and save answer keys with metadata.
+    # Scrape and save answer keys.
     answer_keys_data = scrape_answer_keys(ANSWER_KEY_URL)
     if answer_keys_data:
         save_answer_keys_to_mongodb(answer_keys_data)

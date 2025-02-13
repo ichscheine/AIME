@@ -12,9 +12,9 @@ mongo_client = MongoClient("mongodb://localhost:27017")
 db = mongo_client['amc10_test']
 adaptive_collection = db['adaptive_learning']
 raw_solutions_collection = db['solutions']
-problems_collection = db['problems']
+# problems_collection is not used for adaptive generation now
 
-# (Optional) Retain the RLAgent for future use, though pre-generation reduces the need for on-the-fly RL decisions.
+# (Optional) Retain the RLAgent for future use.
 class RLAgent:
     def __init__(self, actions, epsilon=0.2, alpha=0.5, gamma=0.9):
         self.q_table = defaultdict(float)  # Default value for non-existent keys
@@ -126,8 +126,6 @@ def save_adaptive_data(problem_metadata, solution_summaries, followup_questions)
     """
     Save the pre-generated adaptive data (solution summaries and follow-up questions)
     into the adaptive_learning collection.
-    
-    problem_metadata should be a dict with keys such as: year, contest, problem_number, problem_text, etc.
     """
     adaptive_doc = {
         "year": problem_metadata.get("year"),
@@ -144,16 +142,13 @@ def save_adaptive_data(problem_metadata, solution_summaries, followup_questions)
 def pre_generate_adaptive_data(problem_metadata):
     """
     Given a problem's metadata (including problem_text), pre-generate adaptive learning data.
-    
     Steps:
-    1. Fetch the raw solution from the 'solutions' collection using metadata (year, contest, problem_number).
-    2. Generate 3 concise solution summaries from the raw solution.
-    3. Generate 3 follow-up questions (for easy, medium, and hard difficulty) from the problem text.
-    4. Save both the solution summaries and follow-up questions in the 'adaptive_learning' collection.
-    
+      1. Fetch the raw solution from the 'solutions' collection using metadata (year, contest, problem_number).
+      2. Generate 3 concise solution summaries from the raw solution.
+      3. Generate 3 follow-up questions (for easy, medium, and hard difficulty) from the problem text.
+      4. Save both in the 'adaptive_learning' collection.
     Returns the adaptive document ID.
     """
-    # Query raw solution from db['solutions']
     query = {
         "year": problem_metadata.get("year"),
         "contest": problem_metadata.get("contest"),
@@ -165,36 +160,31 @@ def pre_generate_adaptive_data(problem_metadata):
     else:
         raw_solution = "No raw solution available."
 
-    # Generate solution summaries and follow-up questions.
     solution_summaries = generate_solution_summaries(raw_solution)
     followup_questions = generate_followup_questions(problem_metadata.get("problem_text", ""))
     
-    # Save the combined adaptive data.
     adaptive_id = save_adaptive_data(problem_metadata, solution_summaries, followup_questions)
     return adaptive_id
 
 def generate_adaptive_for_all():
     """
-    Generate adaptive learning data for every problem in the db['problems'] collection.
-    For each problem, the function:
-      1. Extracts metadata (year, contest, problem_number, and problem text).
-      2. Checks if an adaptive entry already exists to avoid duplication.
-      3. Pre-generates adaptive data and saves it in the adaptive_learning collection.
+    Generate adaptive learning data for every problem in the db['solutions'] collection.
+    For each document in db['solutions'], extract the necessary metadata and pre-generate adaptive data.
+    Skip any document missing required fields.
     """
     count = 0
-    problems = problems_collection.find({})
-    for prob in problems:
-        # Build metadata using available fields. Adjust field names as necessary.
+    # Iterate over all documents in db['solutions']
+    raw_solutions = raw_solutions_collection.find({})
+    for sol in raw_solutions:
+        # Build metadata using fields from the solutions document.
         metadata = {
-            "year": prob.get("year", ""),
-            "contest": prob.get("contest", ""),
-            "problem_number": prob.get("problem_number", ""),
-            # Use problem_statement as the problem text.
-            "problem_text": prob.get("problem_statement", "")
+            "year": sol.get("year", ""),
+            "contest": sol.get("contest", ""),
+            "problem_number": sol.get("problem_number", ""),
+            "problem_text": sol.get("problem_statement", "")
         }
-        # Skip if any of the required fields are missing.
         if not (metadata["year"] and metadata["contest"] and metadata["problem_number"] and metadata["problem_text"]):
-            print(f"Skipping problem with missing metadata: {metadata}")
+            print(f"Skipping solution with missing metadata: {metadata}")
             continue
 
         # Check if adaptive data already exists for this problem.
@@ -212,6 +202,6 @@ def generate_adaptive_for_all():
         count += 1
     print(f"Processed {count} new problems.")
 
-# For direct running, generate adaptive data for all problems.
+# For direct running, generate adaptive data for all problems in db['solutions'].
 if __name__ == "__main__":
     generate_adaptive_for_all()

@@ -13,7 +13,7 @@ client = MongoClient("mongodb://localhost:27017")
 db = client['amc10_test']
 problems_collection = db['problems']
 answer_keys_collection = db['answer_keys']
-adaptive_collection = db['adaptive_learning']
+adaptive_collection = db['adaptive_learning_o3']
 
 ###############################################
 # Endpoint: Return a Random Problem
